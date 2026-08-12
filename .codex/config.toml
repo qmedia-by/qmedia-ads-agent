@@ -1,0 +1,12 @@
+# Секретов здесь нет и быть не должно: developer token и client secret
+# живут на сервере, авторизация проходит через браузерный OAuth.
+
+[mcp_servers.google-ads]
+url = "https://google-ads-mcp.qmedia.by/mcp"
+startup_timeout_sec = 45
+tool_timeout_sec = 120
+
+[mcp_servers.lidfly]
+url = "https://lidfly.ru/mcp/v3"
+startup_timeout_sec = 45
+tool_timeout_sec = 120

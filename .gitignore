@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+*.local.json
+*.local.toml
+*.secret.json
+tokens.env
+.cache/
+node_modules/
+.DS_Store

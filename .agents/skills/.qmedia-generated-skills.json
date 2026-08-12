@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "connection-doctor/SKILL.md",
+      "sha256": "882b8d940563fdcaf5492a8dbf382d6ed1c0a067168f0fb2f6d9bda596b8257d"
+    },
+    {
+      "path": "connection-doctor/agents/openai.yaml",
+      "sha256": "0729c9f8ca73a7152e5c8844f5178206da1f60d942ada7e5b7b03212685028fb"
+    },
+    {
+      "path": "google-ads-context/SKILL.md",
+      "sha256": "44266c8c1061e6f620c1286dcff3d6f9c844b7e103ca504a15edcb6e335f2a72"
+    },
+    {
+      "path": "google-ads-context/agents/openai.yaml",
+      "sha256": "1b626fb6282e568718c779c760bc00102abaf649894c00e043be5f826fa9322f"
+    },
+    {
+      "path": "keyword-clustering/SKILL.md",
+      "sha256": "86e438b6dfc8056a5bfe11907c78feb5f6780270f8e7d7dc0da7c9c2c4ef83be"
+    },
+    {
+      "path": "keyword-clustering/agents/openai.yaml",
+      "sha256": "69a9daf4b0bb3b17dec0c7e6bcb246302ce21186e70b20b409cf15409d9ea55d"
+    },
+    {
+      "path": "keyword-clustering/references/clustering-rules.md",
+      "sha256": "5c745b50d9774dd7f471212259d66082dd799a4452fafc1c005bcc19d74fe464"
+    },
+    {
+      "path": "keyword-clustering/references/intent-and-minus-words.md",
+      "sha256": "b092d27ef10bf8f3cba1dbf1b107c666c46d5ebbf4d59ffe329ea0c9e964ec6d"
+    },
+    {
+      "path": "keyword-clustering/references/output-format.md",
+      "sha256": "21432168850550ffb102e4832adad2530bffe001925781e5d7073c89804d2ccf"
+    },
+    {
+      "path": "keyword-research/SKILL.md",
+      "sha256": "bcdd2804dbb030c9b7d1d221219a2985196941359fdaba6bbe74506979a5e39c"
+    },
+    {
+      "path": "keyword-research/agents/openai.yaml",
+      "sha256": "3baf677880ac3619817cd0f67d32f57069384a3baf51fec9068f0c451ab49a67"
+    },
+    {
+      "path": "keyword-research/references/geo-targets.md",
+      "sha256": "c1fccec51c153d555e0d1fa4c4d2ca5b74f2c1cb9821ef745ee54691ce622635"
+    },
+    {
+      "path": "mcp-v3-provider-context/SKILL.md",
+      "sha256": "56906f20f02e0d9b38db5caabcaa9c526eba23df6281e60fda540546eac935cd"
+    },
+    {
+      "path": "mcp-v3-provider-context/agents/openai.yaml",
+      "sha256": "214802c4115e080b0e8ee4092f92eeac0a7c7d5ec8fd2fd73812ba9b277366c4"
+    },
+    {
+      "path": "vk-ads-campaign-builder/SKILL.md",
+      "sha256": "efb3a69084549f4b512ab0ac4c966e2c3a3544d328d489593796ea9e48ef324f"
+    },
+    {
+      "path": "vk-ads-campaign-builder/agents/openai.yaml",
+      "sha256": "ddc725a75e49fdd27c47f0083fcf27477e29979730eba293110083f4ed219617"
+    },
+    {
+      "path": "workspace-project-manager/SKILL.md",
+      "sha256": "9ef1d4e55dc913c8859e0afe49e5d2a76b2477af69a7d6f5105e9407e1aa49da"
+    },
+    {
+      "path": "workspace-project-manager/agents/openai.yaml",
+      "sha256": "569d5761d089b19b64eaee669de9ed1cec42ec966805142ef01544c54817c1f3"
+    },
+    {
+      "path": "yandex-direct-campaign-builder/SKILL.md",
+      "sha256": "7ca1fed0ad5ca7a30957e30e4ae954ebac77fd1abde58f40c85505cb7d0e387e"
+    },
+    {
+      "path": "yandex-direct-campaign-builder/agents/openai.yaml",
+      "sha256": "c80bb2dc0918ddab889f0a9c2df8cca042de6a562d6186c7ef8544cd3cdc5558"
+    }
+  ]
+}

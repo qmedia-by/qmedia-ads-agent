@@ -1,0 +1,12 @@
+interface:
+  display_name: "Scope LidFly"
+  short_description: "Разрешение кабинета и кампании в LidFly MCP"
+  default_prompt: "Используй $mcp-v3-provider-context, чтобы точно определить кабинет и кампанию перед работой с Яндекс Директом или VK."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "lidfly"
+      description: "LidFly MCP v3"
+      transport: "streamable_http"
+      url: "https://lidfly.ru/mcp/v3"

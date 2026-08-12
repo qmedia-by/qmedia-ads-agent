@@ -1,0 +1,11 @@
+interface:
+  display_name: "Контекст Google Ads"
+  short_description: "Выбор Аккаунта и основы GAQL"
+  default_prompt: "Используй $google-ads-context, чтобы выбрать нужный Аккаунт Google Ads и собрать корректный GAQL-запрос."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "google-ads"
+      description: "MCP-сервер Google Ads агентства"
+      transport: "streamable_http"

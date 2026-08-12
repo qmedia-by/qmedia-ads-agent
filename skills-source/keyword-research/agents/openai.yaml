@@ -1,0 +1,11 @@
+interface:
+  display_name: "Сбор семантики"
+  short_description: "Идеи запросов и частотность из Google Ads"
+  default_prompt: "Используй $keyword-research, чтобы собрать семантику через Google Ads по нужному региону и языку."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "google-ads"
+      description: "MCP-сервер Google Ads агентства"
+      transport: "streamable_http"

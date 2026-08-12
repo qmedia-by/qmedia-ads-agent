@@ -1,0 +1,15 @@
+{
+  "name": "qmedia-ads-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Инструкции и скиллы для AI-агента, работающего с рекламными кампаниями",
+  "scripts": {
+    "sync": "node scripts/sync-skills.mjs",
+    "test": "node scripts/lint-skills.mjs && node scripts/test-skill-rules.mjs && node scripts/check-registry.mjs",
+    "allowed-ids": "node scripts/allowed-customer-ids.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
