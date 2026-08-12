@@ -6,7 +6,7 @@
   "description": "Инструкции и скиллы для AI-агента, работающего с рекламными кампаниями",
   "scripts": {
     "sync": "node scripts/sync-skills.mjs",
-    "test": "node scripts/lint-skills.mjs && node scripts/test-skill-rules.mjs && node scripts/check-registry.mjs",
+    "test": "node scripts/lint-skills.mjs && node scripts/test-skill-rules.mjs && node scripts/check-registry.mjs && node scripts/check-mcp-configs.mjs",
     "allowed-ids": "node scripts/allowed-customer-ids.mjs"
   },
   "engines": {

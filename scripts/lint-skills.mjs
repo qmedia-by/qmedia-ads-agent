@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Структурная проверка скиллов: frontmatter, ссылки на references,
-// синхронность клиентских копий с skills-source.
+// синхронность копий в каталогах Сред с skills-source.
 
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";

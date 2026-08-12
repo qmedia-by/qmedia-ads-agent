@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Раскладывает skills-source/ по клиентским каталогам.
+// Раскладывает skills-source/ по каталогам Сред.
 // Правится только skills-source/; всё остальное генерируется.
 //
 //   node scripts/sync-skills.mjs           записать копии
@@ -18,8 +18,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRoot = path.join(root, "skills-source");
 const manifestName = ".qmedia-generated-skills.json";
 
+// Своего каталога у Cursor здесь нет намеренно: он читает `.agents/skills`
+// наравне со своим `.cursor/skills` — см. ADR-0011.
 const targets = [
-  ".agents/skills", // Codex
+  ".agents/skills", // Codex, Cursor
   ".claude/skills", // Claude Code
 ];
 
@@ -135,7 +137,7 @@ for (const target of targets) {
 }
 
 if (problems.length > 0) {
-  console.error("Клиентские копии скиллов разошлись с skills-source:\n");
+  console.error("Копии скиллов в каталогах Сред разошлись с skills-source:\n");
   for (const problem of problems) console.error(`  - ${problem}`);
   console.error(checkOnly ? "\nЗапустите: npm run sync" : "");
   process.exit(1);
