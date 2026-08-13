@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Печатает список customer_id Google Ads из Реестра, через запятую.
 //
-// Задумывался как источник для серверного allowlist, но такой переменной у
-// официального сервера не существует (docs/adr/0003). Пока allowlist не
-// реализован в форке, скрипт годится только для ручной сверки: сравнить, что
-// в Реестре, с тем, что реально доступно через customers_list_accessible_customers.
+// Это готовое значение переменной GOOGLE_ADS_ALLOWED_CUSTOMER_IDS в .env форка
+// google-ads-mcp на сервере: сервер отклоняет вызовы инструментов для Аккаунтов
+// вне списка (docs/adr/0003). Подключили Клиента — перегенерируйте и обновите
+// .env, иначе агенту откажут по Аккаунту, который в Реестре уже есть.
 //
-//   node scripts/allowed-customer-ids.mjs
+//   npm run allowed-ids
 
 import { readRegistry } from "./lib/registry.mjs";
 
