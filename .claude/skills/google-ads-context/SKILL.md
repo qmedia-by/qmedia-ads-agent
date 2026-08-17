@@ -9,17 +9,30 @@ Use before any Google Ads task. Resolves which Account to query and what may be 
 
 ## The Account comes from the Registry
 
-`registry.yaml` at the repo root maps each Client to its Accounts. Read it first.
+Call `registry_find_client` with the Client's name as the Manager said it. Matching ignores case, spacing and punctuation, so a Client recorded as `activecloud.by` is found by "activecloud". `registry_list_clients` gives every name, for when nothing matches and you need to offer candidates.
 
 Do **not** start from `list_accessible_customers`: it returns bare numeric ids with no names, and picking by resemblance silently reports on the wrong Client. Use that tool only to verify that an id from the Registry is actually reachable.
 
-If the Client is missing from the Registry, say so and ask the Manager to add it through a pull request. Never guess a `customer_id`, and never fall back to "the only account I can see".
+The tool returns a **list** of ids per Provider. More than one is normal — the agency splits a Client across cabinets by country or product line — and it means you must ask the Manager which cabinet they mean. Never query all of them and add the numbers up: the answer would be a total no report of theirs contains.
 
-Google Ads ids are 10 digits, no dashes. A Client may legitimately have several Accounts — if the Registry lists more than one, ask which.
+`google_ads` ids come back as 10 digits, no dashes, ready to pass on. The Manager may say them hyphenated, as the Google Ads interface shows them; that is the same Account.
+
+The Registry covers Google Ads and VK only. It has no Yandex Direct Accounts by design — that context lives in LidFly, see `mcp-v3-provider-context`.
+
+### When the Client is not there
+
+Two different answers, and they must not be confused:
+
+- **`found: false`.** The Client is genuinely not in the Registry — the answer was checked against a fresh read, not a cached one. Say so, and ask the Manager to add them to the Registry. Some Clients of the agency run only on Meta, TikTok or Direct and legitimately have no Google Ads Account at all.
+- **The tool refuses with "the Registry could not be read".** Different thing entirely: the mapping is unknown, not empty. Say the Registry is unreachable and ask the Manager to name the `customer_id` directly. Do **not** fall back to `list_accessible_customers`, and do not guess.
+
+A `warning` field means the answer came from a copy that could not be refreshed. Pass its substance to the Manager — a Client added since then would be missing — and carry on with the answer.
+
+A `problems` field means the Registry itself is inconsistent for this Client, most often one Account listed under two Clients. Report it and ask which is right rather than choosing.
 
 ## This server only reads
 
-Available tools — note the namespace prefixes, the bare names do not exist: `search_search` (GAQL), `metadata_get_resource_metadata`, `customers_list_accessible_customers`, `planning_generate_keyword_ideas`.
+Available tools — note the namespace prefixes, the bare names do not exist: `search_search` (GAQL), `metadata_get_resource_metadata`, `customers_list_accessible_customers`, `planning_generate_keyword_ideas`, `registry_find_client`, `registry_list_clients`.
 
 There is no write tool, by design. Do not attempt to change bids, budgets, statuses, keywords or ads, and do not tell the Manager you will do it later in this session — you will not. If they need a change made, say plainly that Google Ads is read-only here and the change has to happen in the Google Ads interface.
 

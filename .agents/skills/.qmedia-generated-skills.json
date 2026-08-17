@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "connection-doctor/SKILL.md",
-      "sha256": "882b8d940563fdcaf5492a8dbf382d6ed1c0a067168f0fb2f6d9bda596b8257d"
+      "sha256": "77addf3edf255608de18e912e7fdc8d2ef34ac1c1e35778f3e71482580fd821f"
     },
     {
       "path": "connection-doctor/agents/openai.yaml",
@@ -11,7 +11,7 @@
     },
     {
       "path": "google-ads-context/SKILL.md",
-      "sha256": "44266c8c1061e6f620c1286dcff3d6f9c844b7e103ca504a15edcb6e335f2a72"
+      "sha256": "6f473d1bf7b0b20830499a0e771034de45d37a371d753f30bcf42fdca8b0327f"
     },
     {
       "path": "google-ads-context/agents/openai.yaml",
@@ -51,7 +51,7 @@
     },
     {
       "path": "mcp-v3-provider-context/SKILL.md",
-      "sha256": "56906f20f02e0d9b38db5caabcaa9c526eba23df6281e60fda540546eac935cd"
+      "sha256": "a3040ca576043c236e33da44b48c464bcfda12e935e73937ff13fe0634a37542"
     },
     {
       "path": "mcp-v3-provider-context/agents/openai.yaml",
@@ -67,7 +67,7 @@
     },
     {
       "path": "workspace-project-manager/SKILL.md",
-      "sha256": "9ef1d4e55dc913c8859e0afe49e5d2a76b2477af69a7d6f5105e9407e1aa49da"
+      "sha256": "7ad2412f2b3014a1b856625619cef0710aa34ed615aaa78c137609af5677c8b5"
     },
     {
       "path": "workspace-project-manager/agents/openai.yaml",
