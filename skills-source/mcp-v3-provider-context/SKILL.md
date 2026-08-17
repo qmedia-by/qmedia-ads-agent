@@ -7,7 +7,9 @@ description: "Разрешать provider scope в LidFly MCP v3 через get_
 
 Use before any LidFly task — Yandex Direct or VK — where the account, client, connection or campaign is not already exact.
 
-Google Ads does not go through LidFly. Its Accounts come from `registry.yaml`; see the `google-ads-context` skill.
+Google Ads does not go through LidFly. Its Accounts come from the Registry, via `registry_find_client`; see the `google-ads-context` skill.
+
+The Registry does not hold Yandex Direct Accounts, and it is not a substitute for the scope resolution below. Resolve Direct and VK scope here, through LidFly's own meta-tools.
 
 ## Required Sequence
 

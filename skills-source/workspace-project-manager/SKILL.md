@@ -15,7 +15,7 @@ Use when the Manager asks about saved context, decisions, documents, settings, c
 - **Workspace project** — one business inside it. In our terms this is a Client, and `workspace_project_id` is its canonical id for memory writes.
 - Provider identifiers are external entities, never project ids: `client_login` (Yandex Direct), `client_id` / `vk_client_id` (VK), `counter_id` (Metrika). In our terms these identify Accounts, and an Account is not a project.
 
-Note that a Client's Accounts are listed in `registry.yaml`, while its memory lives in a Пространство. The two are separate: the Registry never carries a `workspace_project_id`, and a Пространство never authorises access to an Account.
+Note that a Client's Accounts come from the Registry — `registry_find_client` — while its memory lives in a Пространство. The two are separate: the Registry never carries a `workspace_project_id`, and a Пространство never authorises access to an Account. The Registry also does not list Yandex Direct Accounts, so do not reach for it to resolve LidFly scope.
 
 ## Project scope
 

@@ -23,7 +23,7 @@ const checks = [
     rules: [
       [/[Вв] Google Ads писать нельзя/, "запрет записи в Google Ads (ADR-0009)"],
       [/call_write_tool/, "порядок записи через LidFly (ADR-0009)"],
-      [/registry\.yaml/, "выбор Аккаунта через Реестр (ADR-0008)"],
+      [/registry_find_client/, "выбор Аккаунта через Реестр (ADR-0008)"],
       [/только на чтение/, "репозиторий read-only (ADR-0006)"],
       [/connection-doctor/, "маршрут при протухшем токене (ADR-0007)"],
     ],
@@ -32,7 +32,11 @@ const checks = [
     file: "skills-source/google-ads-context/SKILL.md",
     rules: [
       [/read-only|only reads|no write/i, "Google Ads доступен только на чтение"],
-      [/registry\.yaml/, "Аккаунт выбирается через Реестр"],
+      [/registry_find_client/, "Аккаунт выбирается через Реестр"],
+      [
+        /fall back to `list_accessible_customers`/,
+        "при недоступном Реестре нет отката на list_accessible_customers",
+      ],
     ],
   },
   {

@@ -47,7 +47,11 @@ Do not tie health to a fixed number of tools.
 
 **Config missing or wrong.** Fix only the detected client's config. Google Ads and LidFly are separate entries; a broken one does not affect the other. Neither carries credentials — if you see an `Authorization` header or an API key in a config, that is the fault: it overrides OAuth. Report it without printing the value.
 
-**Access denied for a specific Account.** Not an authorization layer problem. Check that the `customer_id` is in `registry.yaml` and that the Account is on the server's allowlist. A newly connected Client is the usual cause — the Registry was merged but the server's allowlist was not updated.
+**Access denied for a specific Account.** Not an authorization layer problem. The server's allowlist *is* the Registry, so there is one thing to check, not two: does `registry_find_client` return this Client, and is the refused `customer_id` among the ids it gives? If it is not, the Account is not in the Registry, and that is the whole explanation. A newly signed Client is the usual cause; the fix is a row in the Registry, not a server change. Note the Registry refreshes every five minutes, so a row added a moment ago may take that long to take effect for `search_search` — a lookup by name sees it immediately.
+
+**The Registry itself is unreachable.** The `registry_*` tools refuse outright, and calls to Accounts are refused with a message about the server not knowing which Accounts are allowed. This is a server-side fault, not the Manager's: the Registry sheet stopped being shared with the server's service account, was moved, or its columns were renamed. One action: tell the Manager the Registry is unreachable, ask them to name the `customer_id` directly if the work cannot wait, and report it to whoever administers the server. Do not diagnose OAuth here — it is unrelated, and re-authorising will not help.
+
+A `warning` in a `registry_*` answer is a milder version of the same thing: the Registry is being served from a copy that could not be refreshed. Work continues; pass the warning on so someone checks the sheet.
 
 **Connection timeout.** Diagnose this only after config is correct and OAuth is not waiting on the Manager. Retry one safe read. Never retry a write.
 
@@ -55,6 +59,6 @@ Do not tie health to a fixed number of tools.
 
 ## Output
 
-Report: the detected client, the failing layer (`config`, `oauth`, `transport`, `account_access`, `skills`), one next action, and what to check after it.
+Report: the detected client, the failing layer (`config`, `oauth`, `transport`, `registry`, `account_access`, `skills`), one next action, and what to check after it.
 
 Never print tokens, client secrets, developer tokens or authorization headers, and never ask the Manager to paste them.
