@@ -37,7 +37,7 @@ Never hand a Claude Code user a Codex config, or the reverse. Do not create a pa
 2. Is MCP OAuth complete for the failing server?
 3. Only after OAuth succeeds — are the server's tools listed?
 4. Only after tools are available — for LidFly, is the provider connection present? Check with `get_provider_context`.
-5. Only after the connection works — are the project skills present and current?
+5. Only after the connection works — are the project skills present, in sync, and is the checkout current with `origin/dev`?
 
 Do not tie health to a fixed number of tools.
 
@@ -57,8 +57,24 @@ A `warning` in a `registry_*` answer is a milder version of the same thing: the 
 
 **Skills missing or stale.** Prove tools are available first. Then compare the client's skills directory — `.agents/skills` for Codex, `.claude/skills` for Claude Code — against `skills-source/`. Suggest running `npm run sync`. Missing skills are not an OAuth or transport error.
 
+**The checkout is behind.** A different fault from the one above: there the generated copies disagree with `skills-source/`, here the whole repository is older than the current version. `dev` is that version.
+
+Reach for this when tools and OAuth are healthy but the tool does not behave as written: a skill or tool named in these instructions is absent, or a rule the Manager quotes does not match the one in front of you. Check without touching the working tree:
+
+```bash
+git fetch --quiet origin dev && git rev-list --count HEAD..origin/dev
+```
+
+A non-zero count is how many commits behind the checkout is; report the number. Zero means this is not the fault — diagnose elsewhere. No git, no network or any error here makes the check inconclusive, not failed: say so plainly and move on rather than treating it as the answer. If `git rev-parse --abbrev-ref HEAD` is not `dev`, say which branch it is — a Manager is expected to be on `dev`.
+
+**Never run `git pull` yourself.** The repository is read-only to you, and updating mid-session makes the state worse rather than better: the instructions and skills already loaded into your context stay old while the files on disk become new, and nothing afterwards tells the Manager which of the two produced an answer. One action:
+
+> Run `git pull` and start a new session — the update only takes effect in a new one.
+
+Being behind explains absent tools, absent skills and rules that no longer match. It does not explain an expired token, a refused Account or an unreachable Registry. Do not offer an update as the fix for those.
+
 ## Output
 
-Report: the detected client, the failing layer (`config`, `oauth`, `transport`, `registry`, `account_access`, `skills`), one next action, and what to check after it.
+Report: the detected client, the failing layer (`config`, `oauth`, `transport`, `registry`, `account_access`, `skills`, `version`), one next action, and what to check after it.
 
 Never print tokens, client secrets, developer tokens or authorization headers, and never ask the Manager to paste them.
