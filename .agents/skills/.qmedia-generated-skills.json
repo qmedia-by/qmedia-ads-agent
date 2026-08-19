@@ -58,6 +58,14 @@
       "sha256": "214802c4115e080b0e8ee4092f92eeac0a7c7d5ec8fd2fd73812ba9b277366c4"
     },
     {
+      "path": "repo-maintenance/SKILL.md",
+      "sha256": "0280586ef976d58fde8f11f8ff006b8e70f1d381e54de1140a0bdc30ee270797"
+    },
+    {
+      "path": "repo-maintenance/agents/openai.yaml",
+      "sha256": "ece594d096ad3b78050bd22fb21dca1960ed359927bfefaa296be20df624d212"
+    },
+    {
       "path": "vk-ads-campaign-builder/SKILL.md",
       "sha256": "efb3a69084549f4b512ab0ac4c966e2c3a3544d328d489593796ea9e48ef324f"
     },

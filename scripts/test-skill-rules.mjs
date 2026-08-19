@@ -21,15 +21,15 @@ const checks = [
   {
     file: "AGENTS.md",
     rules: [
-      [/[Вв] Google Ads писать нельзя/, "запрет записи в Google Ads (ADR-0009)"],
-      [/call_write_tool/, "порядок записи через LidFly (ADR-0009)"],
-      [/registry_find_client/, "выбор Аккаунта через Реестр (ADR-0008)"],
-      [/только на чтение/, "репозиторий read-only (ADR-0006)"],
-      [/connection-doctor/, "маршрут при протухшем токене (ADR-0007)"],
-      [/get_provider_context/, "Аккаунт Директа берётся у LidFly, а не из Реестра (ADR-0013)"],
+      [/[Вв] Google Ads писать нельзя/, "запрет записи в Google Ads (docs/invariants.md)"],
+      [/call_write_tool/, "порядок записи через LidFly (docs/invariants.md)"],
+      [/registry_find_client/, "выбор Аккаунта через Реестр (docs/invariants.md)"],
+      [/только на чтение/, "репозиторий read-only (docs/invariants.md)"],
+      [/connection-doctor/, "маршрут при протухшем токене (docs/providers.md)"],
+      [/get_provider_context/, "Аккаунт Директа берётся у LidFly, а не из Реестра (docs/invariants.md)"],
       [
         /ничего не говорит про Директ/,
-        "промах Реестра — не доказательство отсутствия Директа (ADR-0013)",
+        "промах Реестра — не доказательство отсутствия Директа (docs/invariants.md)",
       ],
     ],
   },
