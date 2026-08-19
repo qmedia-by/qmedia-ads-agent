@@ -11,7 +11,7 @@
     },
     {
       "path": "google-ads-context/SKILL.md",
-      "sha256": "6f473d1bf7b0b20830499a0e771034de45d37a371d753f30bcf42fdca8b0327f"
+      "sha256": "3a0ca44e9fba6b3f3ac5c9d82a4987d567feefc914a2323fc0dceab00439b20b"
     },
     {
       "path": "google-ads-context/agents/openai.yaml",
@@ -51,7 +51,7 @@
     },
     {
       "path": "mcp-v3-provider-context/SKILL.md",
-      "sha256": "408ac1fb0c3739649b17baabd125050b6bf4081ab9adfcf9085330409cdc3042"
+      "sha256": "528f02648094de13469bc628726a8e463b91f2fb8846f87ad9bf6f6bdd5564d7"
     },
     {
       "path": "mcp-v3-provider-context/agents/openai.yaml",
@@ -75,7 +75,7 @@
     },
     {
       "path": "yandex-direct-campaign-builder/SKILL.md",
-      "sha256": "f195ed74fcec641960114c7992b665de79a2ab399f8c03afade1b8e27ce865fe"
+      "sha256": "2d772304c37d06016147b5c516609d147d4dcb2f10a8dee9e229dc8c3cedd273"
     },
     {
       "path": "yandex-direct-campaign-builder/agents/openai.yaml",

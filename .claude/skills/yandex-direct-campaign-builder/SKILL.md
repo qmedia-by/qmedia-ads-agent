@@ -18,6 +18,8 @@ Use for Yandex Direct campaign creation, audit, optimization, budgets, keywords,
 
 Direct tools use `connection_id` and optional `client_login`. Metrika tools use `counter_id` and optional `connection_id`, not `client_login`.
 
+`registry_find_client` is not a step on this path. The Registry holds Google Ads and VK only, so it can neither give you a Direct login nor prove one does not exist; a Client missing from it may well be a Direct-only Client. Resolve the Account here.
+
 Read `scope_issues`: run only a read-only `next_action` with `may_execute_automatically=true`; never guess around `manual_scope_review`, ambiguity, conflict, provider outage, or login-not-found. Do not derive `client_login` from `external_entity_key`, a project/account name, `external_entity_name`, or Direct `ClientId`.
 
 An old Пространство may carry an incomplete link. Accept a recovered Direct scope only when `get_provider_context` returns the whole set — `workspace_project_id`, `connection_id` and `client_login` — in `tool_args`. A partial answer is not a scope; ask rather than complete it yourself.

@@ -23,7 +23,7 @@ The Registry covers Google Ads and VK only. It has no Yandex Direct Accounts by 
 
 Two different answers, and they must not be confused:
 
-- **`found: false`.** The Client is genuinely not in the Registry — the answer was checked against a fresh read, not a cached one. Say so, and ask the Manager to add them to the Registry. Some Clients of the agency run only on Meta, TikTok or Direct and legitimately have no Google Ads Account at all.
+- **`found: false`.** The Client has no Google Ads and no VK Account — the answer was checked against a fresh read, not a cached one. That is all it means: roughly a third of the agency's Clients run only Direct, Meta or TikTok and have no Registry row by design. Say which Providers you actually checked rather than that the Client is unknown, and ask for a Registry row only when Google Ads or VK is what was wanted. If the question was about Direct, go to `mcp-v3-provider-context` instead.
 - **The tool refuses with "the Registry could not be read".** Different thing entirely: the mapping is unknown, not empty. Say the Registry is unreachable and ask the Manager to name the `customer_id` directly. Do **not** fall back to `list_accessible_customers`, and do not guess.
 
 A `warning` field means the answer came from a copy that could not be refreshed. Pass its substance to the Manager — a Client added since then would be missing — and carry on with the answer.

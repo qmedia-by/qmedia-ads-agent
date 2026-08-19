@@ -1,6 +1,6 @@
 ---
 name: mcp-v3-provider-context
-description: "Разрешать provider scope в LidFly MCP v3 через get_provider_context и resolve_campaign_scope. Использовать вместе со скиллом Провайдера, когда кабинет, подключение или кампания заданы неточно либо названы по имени."
+description: "Находить Аккаунт Яндекс Директа или VK по имени Клиента и разрешать provider scope в LidFly MCP v3 через get_provider_context и resolve_campaign_scope. Использовать, когда логин Директа, подключение, проект или кампания неизвестны либо названы человеческим именем, — в том числе когда Клиента не оказалось в Реестре."
 ---
 
 # MCP v3 Provider Context
@@ -10,6 +10,8 @@ Use before any LidFly task — Yandex Direct or VK — where the account, client
 Google Ads does not go through LidFly. Its Accounts come from the Registry, via `registry_find_client`; see the `google-ads-context` skill.
 
 The Registry does not hold Yandex Direct Accounts, and it is not a substitute for the scope resolution below. Resolve Direct and VK scope here, through LidFly's own meta-tools.
+
+A Registry answer is evidence about Google Ads and VK and about nothing else. Neither `found: false` nor a Client returned without a Direct entry means the Client has no Direct Account — roughly a third of the agency's Clients run Direct only and have no Registry row at all. Start here for a Direct question instead of going to the Registry first, and never tell the Manager a Direct Account is missing until `get_provider_context` has said so.
 
 ## Required Sequence
 
