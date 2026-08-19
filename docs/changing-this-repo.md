@@ -88,6 +88,23 @@ sentence would put a false statement in front of a Manager or let the agent
 write where it must not. Every extra check makes it more tempting to loosen a
 regex than to fix the text.
 
+### When CI runs them
+
+Only on a pull request into `dev` — when it is opened, on every push to the
+branch while it is open, and on reopen. Nothing runs on a branch without a PR,
+and nothing runs on `dev` after a merge.
+
+That last part is the trade. `npm test` is one cheap job, but it used to run
+twice for the same work: once on the PR and again on the push that merged it,
+and the `pull_request` trigger carried no branch filter, so a PR into anything
+ran it too. Superseded runs on the same PR are now cancelled as well.
+
+With no check on `dev` itself, the merge-time safety net has to be GitHub's:
+**require a branch to be up to date before merging**. Without that setting, two
+PRs that pass separately can still break `dev` together, and nothing here will
+say so. The fork's CI has no such gap — its deploy workflow runs the whole suite
+against the merge commit before shipping.
+
 ## Keeping the documentation honest
 
 When behaviour changes, update in the **same change**: the skill or instruction

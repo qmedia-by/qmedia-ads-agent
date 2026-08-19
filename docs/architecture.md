@@ -73,7 +73,7 @@ That makes connecting a Client **one operation** — a row — instead of a row 
 a hand-copied `.env` variable that drifts from it. The behaviour of the sheet
 under failure, and the exact columns parsed, are documented in the fork's
 `FORK.md`; the rules the agent must follow are in
-[invariants.md](./invariants.md#the-registry-covers-google-ads-and-vk-only).
+[invariants.md](./invariants.md#what-the-registry-covers-and-what-its-silence-means).
 
 ## The skills pipeline
 

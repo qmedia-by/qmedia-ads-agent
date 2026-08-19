@@ -37,26 +37,51 @@ change; that path is [changing-this-repo.md](./changing-this-repo.md).
 There is no store of our own for Client KPIs, geo, or history, and the Registry
 is not one — it lives outside the repository entirely.
 
-## The Registry covers Google Ads and VK only
+## What the Registry covers, and what its silence means
 
-Yandex Direct is absent by design, not by omission: in the sheet's Direct column
-some projects keep the cabinet login **together with its password**, and a
-separate block holds social-network passwords. The server never parses those
-columns, so those secrets cannot reach a snapshot, Redis, or an agent's context.
-The guarantee is structural — a column not named in the Provider alias list is
-not read, and a block with no Provider column is skipped whole.
+Google Ads, VK, and a Yandex Direct **login** wherever the sheet records one
+cleanly. Meta and TikTok are outside it entirely.
 
-Two consequences the agent must never get wrong:
+Direct used to be outside it too, and the reasoning was sound as far as it went:
+in the sheet's Direct column some projects keep the cabinet login **together
+with its password**, and a separate tab holds social-network passwords. What the
+reasoning missed was that nothing else connected a Client's name to a Direct
+login. LidFly's `query` searches its own directory of connections, not project
+domains, so a Manager saying "example-shop.by" got nothing back, and about a third
+of the agency's Clients have no Google Ads row to be found by either.
 
-- **A Registry answer is evidence about Google Ads and VK, and about nothing
-  else.** Neither `found: false` nor a Client returned without a Direct entry
-  means the Client has no Direct Account. Roughly a third of the agency's
-  Clients run Direct only and have no Registry row at all.
+So the column is read now, behind two guarantees of different kinds.
+
+**Structural, for the passwords.** Google Ads and VK are *primary* columns and a
+tab or block naming neither is skipped whole — which is what keeps the access
+tab, where every cell is a credential, unparsed. Direct is a *dependent* column:
+read only inside a block that already named a primary Provider.
+
+**Per cell, for the Direct column itself.** A cell is published only if all of
+it is Yandex logins in lower case; one stray word, space, slash, colon or line
+break and the whole cell is dropped and the row reported. A login cannot be
+mined out of a cell that also holds a password, because a password is not shaped
+less like an identifier than a login is. The exact rule and its accepted
+residual risk are in the fork's `FORK.md`.
+
+Three things the agent must never get wrong:
+
+- **A Direct login from the Registry is a candidate, not a scope.** It came out
+  of a spreadsheet and has been checked against nothing. Pass it to LidFly as
+  `client_login` and use what comes back; if LidFly does not know it, say so
+  rather than looking for a similar one.
+- **Absence of a Direct login is not absence of a Direct Account.** The cell may
+  have been dropped, or the Client may not be in the Direct column at all.
+  Neither `found: false` nor a Client returned without a Direct entry proves
+  anything about Direct.
 - **Never report a Direct Account as missing** until LidFly's
   `get_provider_context` has said so.
 
-Both tools return a top-level `yandex_direct` field on every answer saying
-exactly this. That field is the load-bearing copy — see
+Both tools return a top-level `yandex_direct` field on every answer, and it
+carries **three** states — a login found, a cell that could not be read, or
+nothing at all. The middle one means *unknown*, not *absent*, and collapsing it
+into the third is how a Manager is told a Client has no Direct. That field is
+the load-bearing copy — see
 [changing-this-repo.md](./changing-this-repo.md#where-a-new-fact-belongs) for why
 it lives in the payload rather than only in an instruction.
 
