@@ -64,12 +64,16 @@ tool is called: `get_provider_context`, `resolve_campaign_scope`, `search_tools`
 `get_tool_schema`, then `call_tool` for reads and `call_write_tool` for writes.
 Call the meta-tools directly — never pass one as `tool_name` to `call_tool`.
 
-**The Account is not in the Registry.** Resolve it with
-`get_provider_context({ provider: "yandex", query: "<Client name>" })`; pass an
-exact login as `client_login` instead of `query` when one is known. See
-[invariants.md](./invariants.md#the-registry-covers-google-ads-and-vk-only) for
-why the Registry has no Direct column and what its answer does and does not
-prove.
+**Start at the Registry, finish at LidFly.** `registry_find_client` often has
+the Client's Direct login, and it is the only thing that maps a project domain
+to one — LidFly's `query` searches its own directory of connections, so
+"example-shop.by" finds nothing there. Take the login to
+`get_provider_context({ provider: "yandex", client_login: "<login>" })`; with no
+login in the Registry, fall back to `query: "<Client name>"`. Either way LidFly
+decides what is real. See
+[invariants.md](./invariants.md#what-the-registry-covers-and-what-its-silence-means) for
+the three states of the Registry's `yandex_direct` field and why its silence
+proves nothing.
 
 **Never derive a `client_login`** from a Client's name, a project name, an
 `external_entity_name`, an `external_entity_key`, or a Direct `ClientId`. Copy
