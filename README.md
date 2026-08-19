@@ -100,7 +100,7 @@ npm test
 
 ## Инфраструктура
 
-MCP-сервер Google Ads — форк [googleads/google-ads-mcp](https://github.com/googleads/google-ads-mcp) с одним добавленным инструментом `planning_generate_keyword_ideas`, живёт в отдельном репозитории. Официальный сервер собирать семантику не умеет: `KeywordPlanIdeaService` не запрашивается через GAQL.
+MCP-сервер Google Ads — форк [googleads/google-ads-mcp](https://github.com/googleads/google-ads-mcp), живёт в отдельном репозитории. Добавлены сбор семантики (`planning_generate_keyword_ideas`) и Реестр (`registry_find_client`, `registry_list_clients`). Официальный сервер собирать семантику не умеет: `KeywordPlanIdeaService` не запрашивается через GAQL.
 
 Разворачивается в Docker на хостинге агентства по адресу `https://google-ads-mcp.qmedia.by/mcp`, рядом нужен Redis — иначе сессии Менеджеров не переживают перезапуск контейнера. Полный список переменных окружения и порядок развёртывания — в `FORK.md` репозитория форка.
 
