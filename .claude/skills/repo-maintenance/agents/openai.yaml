@@ -1,0 +1,7 @@
+interface:
+  display_name: "Правка инструмента"
+  short_description: "Скиллы, инструкции и документация репозитория"
+  default_prompt: "Используй $repo-maintenance, чтобы аккуратно поправить сам инструмент: скилл, корневые инструкции или документацию."
+
+dependencies:
+  tools: []
