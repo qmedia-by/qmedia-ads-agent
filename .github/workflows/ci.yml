@@ -1,9 +1,25 @@
 name: CI
 
+# Only a pull request into dev, and only while it is open: on creation, on every push to
+# the branch, and on reopen. Those three are the default `types` for pull_request and are
+# spelled out because choosing them is the point of this block.
+#
+# What was here before spent minutes twice over. `pull_request` carried no branch filter,
+# so a PR into any branch ran it; `push` listed dev and main, so a merge ran the same
+# checks the PR had just run — and `main` does not exist in this repository at all.
+#
+# Nothing runs on dev after a merge now. That is safe only while GitHub is set to require
+# a branch to be up to date before merging; without it, two PRs that pass separately can
+# still break dev together.
 on:
-  push:
-    branches: [dev, main]
   pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened]
+
+# Push three commits in a row and only the last one's result can still matter.
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   check:
