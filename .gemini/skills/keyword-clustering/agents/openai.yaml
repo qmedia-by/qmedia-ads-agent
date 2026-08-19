@@ -1,0 +1,7 @@
+interface:
+  display_name: "Кластеризация запросов"
+  short_description: "Группировка семантики по интенту"
+  default_prompt: "Используй $keyword-clustering, чтобы сгруппировать собранные запросы по интенту и назначить посадочные страницы."
+
+dependencies:
+  tools: []

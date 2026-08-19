@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "google-ads": {
+      "serverUrl": "https://google-ads-mcp.qmedia.by/mcp"
+    },
+    "lidfly": {
+      "serverUrl": "https://lidfly.ru/mcp/v3"
+    }
+  }
+}

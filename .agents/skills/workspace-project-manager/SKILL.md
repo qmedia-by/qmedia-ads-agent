@@ -27,6 +27,14 @@ Before writing audits, documents, decisions, snapshots, settings, provider links
 4. If ambiguous, show the candidates and ask for the exact `workspace_project_id`.
 5. If nothing matches, offer to create a project with `workspace_create_project`. **Never create one silently** — least of all a catch-all named «Основной проект», which turns into a dumping ground nobody can untangle later.
 
+## Linking an Account to a project
+
+A project can exist while the Account it should cover is not attached to it yet. Before treating a missing provider scope as a fault, call top-level `get_provider_context` with the exact `workspace_project_id`.
+
+If it answers with `provider_link_candidates`, those Accounts are verified but not yet usable inside the project. Link one only when the Manager asked to: pick the exact candidate and execute its prepared `next_action` through `call_write_tool` with the arguments unchanged. Several candidates mean a question, not a choice you make — ask which Account, and never invent a `client_login` from the project name or an `external_entity_key`.
+
+A missing link is an ordinary write that needs confirmation, not an incident. Do not call `support_prepare_report` for it.
+
 ## Tools
 
 Find internal Workspace tools with `search_tools({ provider: "workspace", ... })` and read each schema with `get_tool_schema` before its first call. Never pass top-level meta-tools such as `search_tools` as `tool_name`.

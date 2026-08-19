@@ -27,9 +27,9 @@ Call `search_tools`, `get_tool_schema`, `get_provider_context`, and `resolve_cam
 ## Scope Rules
 
 - Do not infer `client_login`, `client_id`, `counter_id`, or `connection_id` from a human name.
-- `query` is free project/name/INN/display-identifier search. For Yandex, put an exact Direct login only in `client_login`; both fields may be sent together and are resolved independently.
+- `query` is free project/name/INN/display-identifier search. For Yandex, put an exact Direct login only in `client_login`; both fields may be sent together and are resolved independently. A login-shaped string arriving in `query` is a compatibility candidate only — it still has to pass the same live-directory check before you use it.
 - Inspect `scope_issues`. Automatically execute only a read-only `next_action` with `may_execute_automatically=true`. Never bypass `manual_scope_review`, ambiguity, conflict, directory outage, or login-not-found by guessing arguments.
-- An `external_entity_key`, project name, or `external_entity_name` is never an executable `client_login`.
+- An `external_entity_key`, project name, or `external_entity_name` is never an executable `client_login`. Identifiers you pass on are the ones the tool returned: copy `tool_args`, `scope_arguments` or `next_call.arguments` verbatim rather than assembling arguments yourself from parts of the answer.
 - If `resolve_campaign_scope` returns candidates, ask for the exact `workspace_project_id` or campaign id.
 - For campaign write in agency/team Пространства, include `workspace_project_id` unless preflight returned one unambiguous scope.
 - If provider context says a tool is available only in a selected Пространство, fail closed and ask for that project id.

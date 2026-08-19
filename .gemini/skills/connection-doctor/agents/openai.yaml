@@ -1,0 +1,7 @@
+interface:
+  display_name: "Диагностика подключения"
+  short_description: "Разбор ошибок OAuth и config"
+  default_prompt: "Используй $connection-doctor, чтобы понять, почему не работает подключение к Google Ads или LidFly."
+
+dependencies:
+  tools: []

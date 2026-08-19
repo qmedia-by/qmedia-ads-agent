@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "google-ads": {
+      "httpUrl": "https://google-ads-mcp.qmedia.by/mcp"
+    },
+    "lidfly": {
+      "httpUrl": "https://lidfly.ru/mcp/v3"
+    }
+  },
+  "context": {
+    "fileName": ["AGENTS.md", "GEMINI.md"]
+  }
+}

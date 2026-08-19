@@ -23,13 +23,24 @@ Stop there. Do not propose config edits, do not blame the network, and do not su
 
 ## Identify the client first
 
-Use available context, do not guess:
+Eight clients are supported and each reads a different file. Use available context, do not guess:
 
-- **Codex** — `AGENTS.md`, `.codex/config.toml`, `.agents/skills/`
-- **Claude Code** — `claude` command, project `.mcp.json`, `CLAUDE.md`, `.claude/`
-- **VS Code** — a shell only. Determine whether Codex or Claude Code runs inside it, then apply that client's instructions.
+| Client | Config | Skills |
+|---|---|---|
+| Claude Code | `.mcp.json` | `.claude/skills` |
+| Codex | `.codex/config.toml` | `.agents/skills` |
+| Cursor | `.cursor/mcp.json` | `.agents/skills` |
+| Gemini CLI | `.gemini/settings.json` | `.gemini/skills` |
+| OpenClaw | `~/.openclaw/openclaw.json`, copied from `.openclaw/openclaw.example.json` | `.agents/skills` |
+| VS Code | `.vscode/mcp.json` | none |
+| Windsurf | `.windsurf/mcp.json` | none |
+| Cline | `.cline/mcp_settings.json` | none |
 
 Never hand a Claude Code user a Codex config, or the reverse. Do not create a parallel config for a client that is not in use.
+
+Two clients need a note the others do not. **OpenClaw** reads its config from the home directory, not the project: a correct `.openclaw/openclaw.example.json` proves nothing until it has been copied to `~/.openclaw/openclaw.json`. **Gemini CLI** reads `GEMINI.md` by default, so the root instructions reach it only through `context.fileName` in `.gemini/settings.json` — if that key is missing, tools work while every invariant is silently absent, which looks like a badly behaved agent rather than a configuration fault.
+
+**VS Code, Windsurf and Cline do not load skills at all.** That is the design, not a fault: they do not read the SKILL.md format. Never tell such a Manager to run `npm run sync`, and never diagnose absent skills as an error there. Say instead that this client has limited support, that write safety rules are not loaded, and that changes to campaigns should be made from a fully supported client.
 
 ## Diagnose in order
 
@@ -45,7 +56,9 @@ Do not tie health to a fixed number of tools.
 
 **Waiting for OAuth.** The client shows `Failed` with an `Authenticate` or `Login` button. Give one action: press it, complete the browser sign-in, retry. Do not call this a timeout, do not discuss provider tools yet.
 
-**Config missing or wrong.** Fix only the detected client's config. Google Ads and LidFly are separate entries; a broken one does not affect the other. Neither carries credentials — if you see an `Authorization` header or an API key in a config, that is the fault: it overrides OAuth. Report it without printing the value.
+**Config missing or wrong.** Fix only the detected client's config, and in that client's own schema — the key is `mcpServers` in most, `servers` in VS Code, and the address field is `url`, `serverUrl` or `httpUrl` depending on the client. Google Ads and LidFly are separate entries; a broken one does not affect the other.
+
+Neither server carries credentials — if you see an `Authorization` header or an API key in a config, that is the fault: it overrides OAuth. Third-party setup guides for Cline, VS Code and OpenClaw do suggest a static Bearer key, so a Manager may have added one in good faith. Report it without printing the value.
 
 **Access denied for a specific Account.** Not an authorization layer problem. The server's allowlist *is* the Registry, so there is one thing to check, not two: does `registry_find_client` return this Client, and is the refused `customer_id` among the ids it gives? If it is not, the Account is not in the Registry, and that is the whole explanation. A newly signed Client is the usual cause; the fix is a row in the Registry, not a server change. Note the Registry refreshes every five minutes, so a row added a moment ago may take that long to take effect for `search_search` — a lookup by name sees it immediately.
 
@@ -55,7 +68,7 @@ A `warning` in a `registry_*` answer is a milder version of the same thing: the 
 
 **Connection timeout.** Diagnose this only after config is correct and OAuth is not waiting on the Manager. Retry one safe read. Never retry a write.
 
-**Skills missing or stale.** Prove tools are available first. Then compare the client's skills directory — `.agents/skills` for Codex, `.claude/skills` for Claude Code — against `skills-source/`. Suggest running `npm run sync`. Missing skills are not an OAuth or transport error.
+**Skills missing or stale.** Only for a client that loads skills at all — check the table above before reaching for this. Prove tools are available first, then compare that client's skills directory against `skills-source/` and suggest running `npm run sync`. Missing skills are not an OAuth or transport error.
 
 **The checkout is behind.** A different fault from the one above: there the generated copies disagree with `skills-source/`, here the whole repository is older than the current version. `dev` is that version.
 

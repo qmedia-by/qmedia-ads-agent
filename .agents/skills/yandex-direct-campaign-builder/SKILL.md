@@ -20,6 +20,8 @@ Direct tools use `connection_id` and optional `client_login`. Metrika tools use 
 
 Read `scope_issues`: run only a read-only `next_action` with `may_execute_automatically=true`; never guess around `manual_scope_review`, ambiguity, conflict, provider outage, or login-not-found. Do not derive `client_login` from `external_entity_key`, a project/account name, `external_entity_name`, or Direct `ClientId`.
 
+An old Пространство may carry an incomplete link. Accept a recovered Direct scope only when `get_provider_context` returns the whole set — `workspace_project_id`, `connection_id` and `client_login` — in `tool_args`. A partial answer is not a scope; ask rather than complete it yourself.
+
 ## Default Modern Build
 
 Use modern managed campaigns by default:
@@ -51,6 +53,7 @@ add_unified_campaign
 - Объясни Менеджеру ограничение и предложи открыть страницу в веб-интерфейсе Директа.
 - `get_turbo_pages` читает только метаданные опубликованных страниц; `get_leads` читает только отправленные формы.
 - Не используй `update_ad`, `update_campaign` или другой рекламный write как замену редактированию блоков страницы.
+- Не вызывай support-инструменты LidFly: это граница API Яндекса, а не сбой, и в поддержке с ней сделать нечего.
 
 ## Read Checklist
 
@@ -59,6 +62,10 @@ add_unified_campaign
 - `get_autotargeting` for categories.
 - `get_campaign_stats`, `get_search_queries` with period and attribution.
 - Wordstat via `wordstat_*` without `client_login` or `connection_id`.
+
+## Strategies and learning
+
+Before answering anything about a campaign's bidding strategy, its goals, or whether it has finished learning, read `references/bidding-strategy.md`. The learning status is reconstructed from reports rather than read from Direct, and reporting it as fact is the mistake it exists to prevent.
 
 ## Semantics
 

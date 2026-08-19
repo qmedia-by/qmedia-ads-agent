@@ -18,11 +18,16 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRoot = path.join(root, "skills-source");
 const manifestName = ".qmedia-generated-skills.json";
 
-// Своего каталога у Cursor здесь нет намеренно: он читает `.agents/skills`
-// наравне со своим `.cursor/skills` — см. ADR-0011.
+// Каталогов меньше, чем Сред, и это намеренно: `.agents/skills` читают Codex,
+// Cursor и OpenClaw, `.claude/skills` — Claude Code. Свой каталог заводится
+// только там, где Среда чужие не читает, — см. ADR-0011 и ADR-0012.
+//
+// VS Code, Windsurf и Cline скиллы не грузят вовсе; каталога для них нет и
+// быть не может, им достаётся только MCP-конфиг.
 const targets = [
-  ".agents/skills", // Codex, Cursor
+  ".agents/skills", // Codex, Cursor, OpenClaw
   ".claude/skills", // Claude Code
+  ".gemini/skills", // Gemini CLI
 ];
 
 const checkOnly = process.argv.includes("--check");

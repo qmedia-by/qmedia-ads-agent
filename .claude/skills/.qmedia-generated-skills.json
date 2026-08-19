@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "connection-doctor/SKILL.md",
-      "sha256": "ee0366c42bea52acb326c6e8f1240720b43cb46f1e8f24365ad0871dc5821332"
+      "sha256": "a740728139c2fb654d017b875e230f2777fb974bcafc27acdbd0584592595e80"
     },
     {
       "path": "connection-doctor/agents/openai.yaml",
@@ -51,7 +51,7 @@
     },
     {
       "path": "mcp-v3-provider-context/SKILL.md",
-      "sha256": "a3040ca576043c236e33da44b48c464bcfda12e935e73937ff13fe0634a37542"
+      "sha256": "408ac1fb0c3739649b17baabd125050b6bf4081ab9adfcf9085330409cdc3042"
     },
     {
       "path": "mcp-v3-provider-context/agents/openai.yaml",
@@ -67,7 +67,7 @@
     },
     {
       "path": "workspace-project-manager/SKILL.md",
-      "sha256": "7ad2412f2b3014a1b856625619cef0710aa34ed615aaa78c137609af5677c8b5"
+      "sha256": "849a1e7e6496281cbbb37055877e63e1e8e3cbd99cea8563170e3010ef35c486"
     },
     {
       "path": "workspace-project-manager/agents/openai.yaml",
@@ -75,11 +75,15 @@
     },
     {
       "path": "yandex-direct-campaign-builder/SKILL.md",
-      "sha256": "7ca1fed0ad5ca7a30957e30e4ae954ebac77fd1abde58f40c85505cb7d0e387e"
+      "sha256": "f195ed74fcec641960114c7992b665de79a2ab399f8c03afade1b8e27ce865fe"
     },
     {
       "path": "yandex-direct-campaign-builder/agents/openai.yaml",
       "sha256": "c80bb2dc0918ddab889f0a9c2df8cca042de6a562d6186c7ef8544cd3cdc5558"
+    },
+    {
+      "path": "yandex-direct-campaign-builder/references/bidding-strategy.md",
+      "sha256": "f17954e1330e53f4821a488a087853774980c7f83b787004bac8aa8fed30bb84"
     }
   ]
 }
