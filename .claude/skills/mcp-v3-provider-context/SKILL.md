@@ -9,15 +9,17 @@ Use before any LidFly task — Yandex Direct or VK — where the account, client
 
 Google Ads does not go through LidFly. Its Accounts come from the Registry, via `registry_find_client`; see the `google-ads-context` skill.
 
-The Registry does not hold Yandex Direct Accounts, and it is not a substitute for the scope resolution below. Resolve Direct and VK scope here, through LidFly's own meta-tools.
+**Call `registry_find_client` first for a Direct question, then come back here.** It often has the Client's Direct login, and it is the only thing that maps a project domain to one: `query` searches LidFly's own directory of connections, so "example-shop.by" finds nothing there. That gap is what this instruction exists for.
 
-A Registry answer is evidence about Google Ads and VK and about nothing else. Neither `found: false` nor a Client returned without a Direct entry means the Client has no Direct Account — roughly a third of the agency's Clients run Direct only and have no Registry row at all. Start here for a Direct question instead of going to the Registry first, and never tell the Manager a Direct Account is missing until `get_provider_context` has said so.
+The Registry is never a substitute for the scope resolution below — a login from it is a candidate that LidFly validates, not a resolved scope. Resolve Direct and VK scope here, through LidFly's own meta-tools, however you came by the login.
+
+Read the Registry's `yandex_direct` field, which has three states and no two of them mean the same thing. A **login** goes into `client_login`. A note that the cell **could not be read** means unknown, not absent — the Account almost certainly exists and the sheet needs tidying, so resolve by `query` and tell the Manager which row to fix. **Nothing at all** is not evidence either: neither `found: false` nor a Client returned without a Direct entry means the Client has no Direct Account. Never tell the Manager a Direct Account is missing until `get_provider_context` has said so.
 
 ## Required Sequence
 
 1. Resolve provider scope with the top-level meta-tools:
    - account/client/project unknown: `get_provider_context({ provider, query? })`;
-   - exact Yandex Direct login known: `get_provider_context({ provider: "yandex", query?, client_login })`;
+   - Direct login known — from the Manager or from `registry_find_client`: `get_provider_context({ provider: "yandex", query?, client_login })`;
    - campaign named by user: `resolve_campaign_scope({ provider, query, workspace_project_id? })`.
 2. Find internal provider tools with `search_tools`, passing resolved provider/project scope when supported.
 3. Read each internal tool schema with `get_tool_schema` before its first call.
@@ -28,7 +30,7 @@ Call `search_tools`, `get_tool_schema`, `get_provider_context`, and `resolve_cam
 
 ## Scope Rules
 
-- Do not infer `client_login`, `client_id`, `counter_id`, or `connection_id` from a human name.
+- Do not infer `client_login`, `client_id`, `counter_id`, or `connection_id` from a human name. A login from `registry_find_client` is not an inference — it is a value somebody recorded — so passing it as `client_login` is allowed. It still faces the same live-directory check, and a `login-not-found` on it is an answer, not an invitation to try a similar string.
 - `query` is free project/name/INN/display-identifier search. For Yandex, put an exact Direct login only in `client_login`; both fields may be sent together and are resolved independently. A login-shaped string arriving in `query` is a compatibility candidate only — it still has to pass the same live-directory check before you use it.
 - Inspect `scope_issues`. Automatically execute only a read-only `next_action` with `may_execute_automatically=true`. Never bypass `manual_scope_review`, ambiguity, conflict, directory outage, or login-not-found by guessing arguments.
 - An `external_entity_key`, project name, or `external_entity_name` is never an executable `client_login`. Identifiers you pass on are the ones the tool returned: copy `tool_args`, `scope_arguments` or `next_call.arguments` verbatim rather than assembling arguments yourself from parts of the answer.

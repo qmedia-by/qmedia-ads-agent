@@ -11,14 +11,14 @@ Use for Yandex Direct campaign creation, audit, optimization, budgets, keywords,
 
 1. `search_tools({ provider: "yandex", query })`.
 2. `get_tool_schema` before each new tool.
-3. Unknown account/client/project: `get_provider_context({ provider: "yandex", query? })`. Keep `query` for free project/name/INN search; when the exact Direct login is known, pass it separately as `client_login` (both fields may be used together).
+3. Unknown account/client/project: try `registry_find_client` first, then `get_provider_context({ provider: "yandex", query? })`. Keep `query` for free project/name/INN search; when the Direct login is known — from the Manager or the Registry — pass it separately as `client_login` (both fields may be used together). A Registry login is a candidate LidFly validates, never a resolved scope.
 4. Named campaign: `resolve_campaign_scope({ provider: "yandex", query, workspace_project_id? })`.
 5. Copy returned `scope_arguments` into Direct calls.
 6. Read through `call_tool`; write through `call_write_tool`.
 
 Direct tools use `connection_id` and optional `client_login`. Metrika tools use `counter_id` and optional `connection_id`, not `client_login`.
 
-`registry_find_client` is not a step on this path. The Registry holds Google Ads and VK only, so it can neither give you a Direct login nor prove one does not exist; a Client missing from it may well be a Direct-only Client. Resolve the Account here.
+`registry_find_client` **is** the first step when you have a Client's name and no login: the Registry carries Direct logins where the sheet records them cleanly, and `query` here searches LidFly's directory rather than project domains, so a domain alone finds nothing. What the Registry cannot do is prove a login does not exist — a Client missing from it, or present without a Direct entry, may well run Direct. Resolve the Account here either way.
 
 Read `scope_issues`: run only a read-only `next_action` with `may_execute_automatically=true`; never guess around `manual_scope_review`, ambiguity, conflict, provider outage, or login-not-found. Do not derive `client_login` from `external_entity_key`, a project/account name, `external_entity_name`, or Direct `ClientId`.
 
