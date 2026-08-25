@@ -2,7 +2,7 @@
 
 An **Среда** is the program a Manager runs the agent in. A **Модель** is the
 network doing the work inside it. Supporting a Model is not a thing: "add
-DeepSeek" means supporting OpenClaw, Cline or VS Code, where it runs. No
+DeepSeek" means supporting OpenClaw or VS Code, where it runs. No
 `.deepseek/` directory will ever be correct.
 
 | Environment | MCP config | Skills | Root instructions |
@@ -13,12 +13,10 @@ DeepSeek" means supporting OpenClaw, Cline or VS Code, where it runs. No
 | Gemini CLI | `.gemini/settings.json` | `.gemini/skills` | `AGENTS.md` via `context.fileName` |
 | OpenClaw | `.openclaw/openclaw.example.json` | `.agents/skills` | `AGENTS.md` |
 | VS Code | `.vscode/mcp.json` | `.agents/skills`, `.claude/skills` | `AGENTS.md` with `chat.useAgentsMdFile` |
-| Windsurf | `.windsurf/mcp.json` | — | depends on version |
-| Cline | `.cline/mcp_settings.json` | — | depends on version |
 
 A config per Environment costs ten lines and no maintenance; the schemas differ
 but the addresses are one set, and `scripts/check-mcp-configs.mjs` keeps all
-eight pointing at the same two URLs with no static keys in place of OAuth.
+six pointing at the same three URLs with no static keys in place of OAuth.
 
 ## Three skill directories, not five
 
@@ -40,21 +38,29 @@ Gemini CLI has one trap worth remembering: by default it reads `GEMINI.md`, not
 `context.fileName` instead. Without that line Gemini would connect to both
 servers and run with no invariants at all, silently.
 
-## Windsurf and Cline get MCP only
+## Windsurf and Cline were dropped
 
-They do not read the SKILL.md format, so a Manager working there gets the same
-LidFly write tools with none of the instructions for using them safely — the
-read → plan → confirm → `call_write_tool` order, VK's `goal_mode`, the ban on
-Direct's legacy path.
+They read MCP and not the SKILL.md format, so a Manager working there got every
+Provider's write tools with none of the instructions for using them safely —
+the read → plan → confirm → write order, VK's `goal_mode`, the ban on Direct's
+legacy path. That could not be closed technically: the write tools belong to
+LidFly and to Meta, and there is no way to disable a tool for one Environment.
 
-We cannot close this technically: the write tools belong to LidFly, and we have
-no way to disable them per Environment. What remains is an honest warning in the
-Manager's guide and a recommendation to use those Environments for reading only.
+While two write Providers went through a plan the Manager reads in a familiar
+tool, this was an accepted risk carrying an honest warning in the Manager's
+guide. Meta ended that. Its budget edits apply to a live account immediately —
+no paused state, no confirmation screen of its own — so in an Environment with
+no rules loaded, the plan that is supposed to precede them does not exist.
 
-The sign that this was the wrong call: a Manager from one of them reports a
-change made without a plan being shown. The fix is dropping the Environment
-from the supported list — not adding another file of rules, because a file the
-Environment does not read fixes nothing.
+This page used to say what the sign would be that keeping them was wrong, and
+that the fix was dropping the Environment rather than writing another file of
+rules a client does not read. Widening the hole counted as that sign, and the
+fix was taken. It cost nothing: nobody had deployed either one, so there was no
+migration to arrange and nothing to announce.
+
+VS Code stays. It has the same gap and it is not the same trade — Managers do
+work there, and the open question below is whether the gap is even real on a
+current version.
 
 ## Open question: VS Code is under-served
 

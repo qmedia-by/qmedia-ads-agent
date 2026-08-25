@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Восемь Сред — восемь файлов с одними и теми же адресами MCP-серверов.
+// Шесть Сред — шесть файлов с одними и теми же адресами MCP-серверов.
 //
 // Генерировать их из общего источника дороже, чем сами данные: схема у каждой
 // своя — `mcpServers` против `servers`, `url` против `serverUrl` и `httpUrl`,
@@ -22,9 +22,13 @@ const mirrors = [
   ".gemini/settings.json", // Gemini CLI
   ".openclaw/openclaw.example.json", // OpenClaw
   ".vscode/mcp.json", // VS Code
-  ".windsurf/mcp.json", // Windsurf
-  ".cline/mcp_settings.json", // Cline
 ];
+
+// Windsurf и Cline здесь были и убраны вместе со своими файлами. Они читают
+// MCP, но не читают скиллы, — а значит получали write-инструменты Провайдеров
+// без единого правила обращения с ними. Пока Провайдеров с записью было два,
+// это считалось признанным риском; третий его расширял, и Среды сняли с
+// поддержки. Подробности — в docs/environments.md.
 
 // Ни один Провайдер здесь не авторизуется статикой: и Google Ads, и LidFly
 // ходят через браузерный OAuth. Заголовок или ключ в конфиге не просто лишний
@@ -64,6 +68,24 @@ function checkForSecrets(relative, source) {
   }
 }
 
+// Сверка по подстроке не заметит сломанного синтаксиса: файл с лишней запятой
+// содержит и имя сервера, и адрес, и проверка проходит. А Среда на таком файле
+// не поднимет **ни одного** сервера — не только новый, — и Менеджер увидит не
+// «Meta не подключилась», а «инструментов нет вовсе». Дешевле проверить здесь,
+// чем диагностировать это по симптому.
+//
+// TOML не проверяется: парсера в стандартной библиотеке Node нет, а тащить
+// зависимость ради одного файла дороже, чем сверка по имени сервера и адресу,
+// которая для него и так делается ниже.
+function checkSyntax(relative, source) {
+  if (!relative.endsWith(".json")) return;
+  try {
+    JSON.parse(source);
+  } catch (error) {
+    problems.push(`${relative}: не разбирается как JSON — ${error.message}`);
+  }
+}
+
 checkForSecrets(canonPath, canonSource);
 
 for (const mirror of mirrors) {
@@ -72,6 +94,7 @@ for (const mirror of mirrors) {
     problems.push(`${mirror}: отсутствует — эта Среда останется без MCP`);
     continue;
   }
+  checkSyntax(mirror, source);
   for (const [name, config] of servers) {
     if (!source.includes(name)) {
       problems.push(`${mirror}: нет сервера «${name}»`);

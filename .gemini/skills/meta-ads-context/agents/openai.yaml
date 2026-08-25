@@ -1,0 +1,16 @@
+interface:
+  display_name: "Кампании Meta"
+  short_description: "Выбор кабинета и границы правок"
+  default_prompt: "Используй $meta-ads-context, чтобы выбрать нужный рекламный кабинет Meta и безопасно поправить кампании в нём."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "meta"
+      description: "Официальный MCP-сервер Meta Ads"
+      transport: "streamable_http"
+      url: "https://mcp.facebook.com/ads"
+    - type: "mcp"
+      value: "google-ads"
+      description: "MCP-сервер агентства — Реестр, связка Клиента с кабинетом"
+      transport: "streamable_http"

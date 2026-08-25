@@ -22,9 +22,9 @@ const manifestName = ".qmedia-generated-skills.json";
 // Cursor и OpenClaw, `.claude/skills` — Claude Code. Свой каталог заводится
 // только там, где Среда чужие не читает, — см. docs/environments.md.
 //
-// Windsurf и Cline скиллы не грузят вовсе; каталога для них нет и быть не
-// может, им достаётся только MCP-конфиг. VS Code читает .agents/skills и
-// .claude/skills, своего каталога ему тоже не нужно.
+// VS Code читает .agents/skills и .claude/skills, своего каталога ему тоже не
+// нужно. Windsurf и Cline скиллы не грузили вовсе и по этой причине сняты с
+// поддержки — каталога для них нет и не было.
 const targets = [
   ".agents/skills", // Codex, Cursor, OpenClaw
   ".claude/skills", // Claude Code

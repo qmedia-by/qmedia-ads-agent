@@ -81,7 +81,7 @@ backticks; the lint checks both directions, so an unreferenced bundle fails.
 |---|---|
 | `lint-skills.mjs` | frontmatter, `name` matching the directory, description language and length, references linked both ways, and that the generated copies match source |
 | `test-skill-rules.mjs` | that specific load-bearing sentences still exist in `AGENTS.md` and in skills |
-| `check-mcp-configs.mjs` | that all eight Environment configs point at the same two URLs, are listed in `README.md`, and carry no static keys |
+| `check-mcp-configs.mjs` | that all six Environment configs point at the same three URLs, are listed in `README.md`, and carry no static keys |
 
 `test-skill-rules.mjs` is deliberately small. Add a rule only when losing the
 sentence would put a false statement in front of a Manager or let the agent

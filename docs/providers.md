@@ -5,11 +5,13 @@
 | Google Ads | the agency's server | `customer_id` (10 digits) | read only | none |
 | Yandex Direct | LidFly `mcp/v3` | `client_login` | read and write | Пространства |
 | VK | LidFly `mcp/v3` | `client_id` | read and write | Пространства |
-| Meta, TikTok | — | — | not connected | — |
+| Meta | `mcp.facebook.com/ads` | `act_<digits>` | read, and edit what exists | none |
+| TikTok | — | — | not connected | — |
 
-Meta and TikTok are after the MVP. Both have official MCP servers; Meta's is in
-open beta with per-account rollout. Asked for data on either, say plainly that
-the Provider is not connected and do not offer a workaround.
+TikTok is after the MVP. It has an official MCP server; connecting it is a
+project of its own, with its own authorisation and its own skill. Asked for
+TikTok data, say plainly that the Provider is not connected and do not offer a
+workaround.
 
 ## Google Ads
 
@@ -59,10 +61,13 @@ agency's token is Standard and access has been confirmed by a direct REST call.
 
 ## Yandex Direct
 
-Reached only through LidFly, whose meta-tools resolve scope before any provider
-tool is called: `get_provider_context`, `resolve_campaign_scope`, `search_tools`,
-`get_tool_schema`, then `call_tool` for reads and `call_write_tool` for writes.
-Call the meta-tools directly — never pass one as `tool_name` to `call_tool`.
+Reached only through LidFly, whose top-level tools resolve scope before any
+provider tool is called: `get_provider_context`, `resolve_campaign_scope`,
+`search_tools`, `get_tool_schema`, then `call_tool` for reads and
+`call_write_tool` for writes. Call them directly — never pass one as
+`tool_name` to `call_tool`. They used to be called meta-tools here; the word
+was given up when Meta became a Provider, because the collision was one
+mis-read away from an agent looking for Meta in LidFly.
 
 **Start at the Registry, finish at LidFly.** `registry_find_client` often has
 the Client's Direct login, and it is the only thing that maps a project domain
@@ -108,6 +113,52 @@ Same LidFly path, keyed by `connection_id` and optional `client_id`. VK **is**
 in the Registry, so a Client's `client_id` can come from `registry_find_client`
 as well as from provider context.
 
+## Meta
+
+Reached through Meta's own server, `https://mcp.facebook.com/ads` — not through
+LidFly, which does not carry Meta at all, and not through the agency's server,
+which holds only the Registry entry. Authorisation is Facebook Login for
+Business in the browser, one sign-in per Manager, no application of ours and no
+App Review: the agency's Business Manager holds the client cabinets by partner
+access, and each Manager reaches what their own account can see.
+
+**The Registry is navigation here, not a boundary.** For Google Ads the same
+sheet is the server's allowlist and an Account missing from it is refused; for
+Meta nothing of ours can refuse anything, because the cabinet lives on Meta's
+server. What a Manager may touch is decided in Business Manager. A Client with
+no Registry row is worked on through Meta's own list of ad accounts, and their
+human names are what the Manager picks from. See
+[invariants.md](./invariants.md#the-registry-is-a-boundary-for-google-ads-and-navigation-for-everyone-else).
+
+`registry_find_client` returns bare digits under `meta`; Meta's tools want
+`act_` in front of them. Its `meta` field carries the same three states as
+`yandex_direct` and the opposite conclusion at the end of them.
+
+**Existing entities may be edited; nothing may be created.** Budgets, statuses,
+bids and targeting — yes, under the usual read → plan → confirm → write order.
+`ads_create_campaign`, `ads_create_ad_set` and `ads_create_ad` exist on the
+server and are not to be used: creation pulls in creatives, Pages, Instagram
+accounts and catalogues, and it is a decision nobody has made. Their being
+available is not permission.
+
+**A budget edit applies immediately.** Unlike creation, which lands paused and
+needs a separate activation, there is no state that catches a budget change and
+no confirmation screen of Meta's own. So the plan must name the old value, the
+new value and the account currency every time; that plan is the only place the
+Manager sees the change before it is real. No percentage threshold is defined
+on purpose — a threshold goes stale and invites splitting one edit into two.
+
+**Money is in the account's minor units**, and the account also owns the time
+zone and the attribution window. State all three beside any figure. Meta and
+Google Ads conversions are not comparable without them and must never be added
+into one total; the rule is the same one that keeps Wordstat and Google demand
+in separate columns.
+
+**Open beta, rolled out per ad account.** A tool unavailable for one cabinet
+while the connection is healthy is that rollout, not an authorisation failure.
+Meta's sessions are long-lived, so the seven-day Google Ads reflex does not
+apply here and an authorisation error is a real fault worth diagnosing.
+
 ## Пространства (LidFly memory)
 
 Decisions, documents, campaign snapshots and follow-up tasks for Yandex Direct
@@ -118,5 +169,5 @@ Write to a Пространство only with a resolved `workspace_project_id`.
 agency and team Пространства include it explicitly in campaign writes unless
 preflight returned exactly one unambiguous scope.
 
-Nothing equivalent exists for Google Ads; see
-[invariants.md](./invariants.md#google-ads-has-no-project-memory-so-it-must-ask).
+Nothing equivalent exists for Google Ads or Meta; see
+[invariants.md](./invariants.md#providers-without-memory-have-to-ask).

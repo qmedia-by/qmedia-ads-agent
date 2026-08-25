@@ -35,6 +35,31 @@ const checks = [
         /три состояния/,
         "у ответа про Директ три состояния, а не два (docs/invariants.md)",
       ],
+      [
+        /В Meta можно менять существующее, но не создавать/,
+        "запрет создавать кампании в Meta (docs/invariants.md)",
+      ],
+      [
+        /навигация, а не граница/,
+        "Реестр по Meta не allowlist: молчание — не отказ (docs/invariants.md)",
+      ],
+    ],
+  },
+  {
+    file: "skills-source/meta-ads-context/SKILL.md",
+    rules: [
+      [
+        /Never create a campaign, ad set or ad/,
+        "запрет создавать кампании в Meta",
+      ],
+      [
+        /navigation only/,
+        "Реестр по Meta — навигация, отсутствие строки не повод отказать",
+      ],
+      [
+        /the old value, the new value and the currency/,
+        "в плане на правку бюджета Meta названы старое, новое и валюта",
+      ],
     ],
   },
   {

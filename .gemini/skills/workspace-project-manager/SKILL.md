@@ -37,7 +37,7 @@ A missing link is an ordinary write that needs confirmation, not an incident. Do
 
 ## Tools
 
-Find internal Workspace tools with `search_tools({ provider: "workspace", ... })` and read each schema with `get_tool_schema` before its first call. Never pass top-level meta-tools such as `search_tools` as `tool_name`.
+Find internal Workspace tools with `search_tools({ provider: "workspace", ... })` and read each schema with `get_tool_schema` before its first call. Never pass top-level tools such as `search_tools` as `tool_name`.
 
 Read through `call_tool`: `workspace_list_projects`, `workspace_get_project`, `workspace_prepare_project_scope`, `workspace_prepare_project_deletion`, `workspace_get_settings`, `workspace_get_tasks`, `workspace_get_scheduled_ai_tasks`.
 
@@ -60,7 +60,7 @@ These two look similar and behave completely differently. Choosing wrong either 
 
 `workspace_add_tasks` is a **manual reminder**: it stores a prompt and a due date, and the due date only sends email. It never runs AI or Provider tools. Use it whenever the future check must be shown to the Manager, asks a question, or needs a new decision.
 
-`workspace_schedule_ai_task` is an **AI autostart**: LidFly executes the saved plan at the appointed time with no further confirmation. Every object, action, value and conditional branch must be approved before you schedule it. `allowed_tools` must list real domain tools for the future run, not v3 meta-tools; include `workspace_project_id` for Provider or campaign tasks; for a future write, include concrete target items and a confirmed plan.
+`workspace_schedule_ai_task` is an **AI autostart**: LidFly executes the saved plan at the appointed time with no further confirmation. Every object, action, value and conditional branch must be approved before you schedule it. `allowed_tools` must list real domain tools for the future run, not v3 top-level tools; include `workspace_project_id` for Provider or campaign tasks; for a future write, include concrete target items and a confirmed plan.
 
 ## Output
 

@@ -17,13 +17,13 @@ The tool returns a **list** of ids per Provider. More than one is normal — the
 
 `google_ads` ids come back as 10 digits, no dashes, ready to pass on. The Manager may say them hyphenated, as the Google Ads interface shows them; that is the same Account.
 
-The Registry covers Google Ads, VK, and a Yandex Direct login wherever the sheet records one cleanly. A `yandex_direct` login is not an Account you can query here — it is a candidate to resolve through LidFly, see `mcp-v3-provider-context`. Its absence proves nothing either way: read the `yandex_direct` field, which says which of its three states this answer is.
+The Registry covers Google Ads, VK, Meta, and a Yandex Direct login wherever the sheet records one cleanly. Only `google_ads` ids are Accounts you can query here. A `yandex_direct` login is a candidate to resolve through LidFly, see `mcp-v3-provider-context`; a `meta` id belongs to Meta's own server, see `meta-ads-context`. Neither one's absence proves anything: both come back as a field of their own saying which of three states this answer is.
 
 ### When the Client is not there
 
 Two different answers, and they must not be confused:
 
-- **`found: false`.** The Client has no Account under any Provider the Registry covers — the answer was checked against a fresh read, not a cached one. That is all it means: Meta and TikTok are outside the Registry entirely, and a Direct login the sheet wrote next to its password is not read. Say which Providers you actually checked rather than that the Client is unknown, and ask for a Registry row only when Google Ads or VK is what was wanted. If the question was about Direct, go to `mcp-v3-provider-context` instead.
+- **`found: false`.** The Client has no Account under any Provider the Registry covers — the answer was checked against a fresh read, not a cached one. That is all it means: TikTok is outside the Registry entirely, and a Direct login the sheet wrote next to its password is not read. Say which Providers you actually checked rather than that the Client is unknown, and ask for a Registry row when Google Ads or VK is what was wanted — for those the row is the only route. Direct is still worth trying through LidFly (`mcp-v3-provider-context`), and Meta through Meta (`meta-ads-context`): for neither is a missing row a refusal.
 - **The tool refuses with "the Registry could not be read".** Different thing entirely: the mapping is unknown, not empty. Say the Registry is unreachable and ask the Manager to name the `customer_id` directly. Do **not** fall back to `list_accessible_customers`, and do not guess.
 
 A `warning` field means the answer came from a copy that could not be refreshed. Pass its substance to the Manager — a Client added since then would be missing — and carry on with the answer.

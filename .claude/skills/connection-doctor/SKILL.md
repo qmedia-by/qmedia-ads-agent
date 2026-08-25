@@ -1,6 +1,6 @@
 ---
 name: connection-doctor
-description: "Диагностировать сбой подключения к Google Ads или LidFly: протухший OAuth, неверный config клиента, timeout транспорта, отсутствующее подключение Провайдера. Использовать при ошибках авторизации, Failed, Authenticate/Login и недоступных инструментах."
+description: "Диагностировать сбой подключения к Google Ads, LidFly или Meta: протухший OAuth, неверный config клиента, timeout транспорта, отсутствующее подключение Провайдера, недоступный инструмент. Использовать при ошибках авторизации, Failed, Authenticate/Login и когда инструмент не отвечает."
 ---
 
 # Connection Doctor
@@ -33,21 +33,33 @@ Eight clients are supported and each reads a different file. Use available conte
 | Gemini CLI | `.gemini/settings.json` | `.gemini/skills` |
 | OpenClaw | `~/.openclaw/openclaw.json`, copied from `.openclaw/openclaw.example.json` | `.agents/skills` |
 | VS Code | `.vscode/mcp.json` | none |
-| Windsurf | `.windsurf/mcp.json` | none |
-| Cline | `.cline/mcp_settings.json` | none |
 
 Never hand a Claude Code user a Codex config, or the reverse. Do not create a parallel config for a client that is not in use.
 
+**Windsurf and Cline are not supported and have no config here.** If a Manager reports working in one of them, that is the fault: they load MCP but not skills, so every Provider's write tools arrive with none of the rules for using them. Point them at a supported client rather than reconstructing a config.
+
 Two clients need a note the others do not. **OpenClaw** reads its config from the home directory, not the project: a correct `.openclaw/openclaw.example.json` proves nothing until it has been copied to `~/.openclaw/openclaw.json`. **Gemini CLI** reads `GEMINI.md` by default, so the root instructions reach it only through `context.fileName` in `.gemini/settings.json` — if that key is missing, tools work while every invariant is silently absent, which looks like a badly behaved agent rather than a configuration fault.
 
-**VS Code, Windsurf and Cline do not load skills at all.** That is the design, not a fault: they do not read the SKILL.md format. Never tell such a Manager to run `npm run sync`, and never diagnose absent skills as an error there. Say instead that this client has limited support, that write safety rules are not loaded, and that changes to campaigns should be made from a fully supported client.
+**VS Code does not load skills at all.** That is the design, not a fault: it does not read the SKILL.md format from the paths this repository generates. Never tell such a Manager to run `npm run sync`, and never diagnose absent skills as an error there. Say instead that this client has limited support, that write safety rules are not loaded, and that changes to campaigns should be made from a fully supported client.
+
+## Meta: two failures that look alike and are not
+
+**A tool unavailable for one ad account is the beta, not authorisation.** Meta's connectors are in open beta and tools are rolled out per ad account, so one connection can serve one cabinet fully and another only partly. Recognise it: other Meta calls succeed, other accounts succeed, and only some tools are missing for this one. There is nothing to fix on our side and re-authorising does not help. Say which tool is unavailable for which account and stop there.
+
+**Meta's token does not expire weekly.** Do not carry the Google Ads answer across. Meta authorises through Facebook Login for Business and its sessions are long-lived, so an authorisation error a few days after signing in is *not* the routine expiry it would be for Google Ads. Treat it as a real failure and diagnose it: the connection was revoked, the Manager's access to that cabinet was removed in Business Manager, or the sign-in never completed. Reaching for "it has been a week, sign in again" here sends the Manager round a loop that fixes nothing.
+
+When it genuinely is authorisation, one action:
+
+> Re-authorise the `meta` server in your client and repeat the request.
+
+If that succeeds and the account is still refused, the next thing to check is the Manager's access to that cabinet in Meta Business Manager. That is outside this repository and outside the agent — say so plainly rather than guessing at it.
 
 ## Diagnose in order
 
 1. Is the remote endpoint configured in the current client's format? Transport must be HTTP/Streamable HTTP, never SSE.
 2. Is MCP OAuth complete for the failing server?
 3. Only after OAuth succeeds — are the server's tools listed?
-4. Only after tools are available — for LidFly, is the provider connection present? Check with `get_provider_context`.
+4. Only after tools are available — is the Provider's own connection present? For LidFly check with `get_provider_context`; for Meta, whether the connection can list any ad account at all. None at all is a connection fault; some but not the wanted one is access in Business Manager, not a fault here.
 5. Only after the connection works — are the project skills present, in sync, and is the checkout current with `origin/dev`?
 
 Do not tie health to a fixed number of tools.
@@ -58,7 +70,7 @@ Do not tie health to a fixed number of tools.
 
 **Config missing or wrong.** Fix only the detected client's config, and in that client's own schema — the key is `mcpServers` in most, `servers` in VS Code, and the address field is `url`, `serverUrl` or `httpUrl` depending on the client. Google Ads and LidFly are separate entries; a broken one does not affect the other.
 
-Neither server carries credentials — if you see an `Authorization` header or an API key in a config, that is the fault: it overrides OAuth. Third-party setup guides for Cline, VS Code and OpenClaw do suggest a static Bearer key, so a Manager may have added one in good faith. Report it without printing the value.
+Neither server carries credentials — if you see an `Authorization` header or an API key in a config, that is the fault: it overrides OAuth. Third-party setup guides for VS Code and OpenClaw do suggest a static Bearer key, so a Manager may have added one in good faith. Report it without printing the value.
 
 **Access denied for a specific Account.** Not an authorization layer problem. The server's allowlist *is* the Registry, so there is one thing to check, not two: does `registry_find_client` return this Client, and is the refused `customer_id` among the ids it gives? If it is not, the Account is not in the Registry, and that is the whole explanation. A newly signed Client is the usual cause; the fix is a row in the Registry, not a server change. Note the Registry refreshes every five minutes, so a row added a moment ago may take that long to take effect for `search_search` — a lookup by name sees it immediately.
 

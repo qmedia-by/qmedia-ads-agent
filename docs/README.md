@@ -11,7 +11,7 @@ must not be steered by campaign rules.
 |---|---|---|
 | Asked to | run campaigns: semantics, reports, audits, builds | change the tool: skills, instructions, docs, configs |
 | Writes to | nothing in the repo — artefacts go out as files | the repo, and only the repo |
-| Reads | [`AGENTS.md`](../AGENTS.md), [`CONTEXT.md`](../CONTEXT.md), the eight task skills | this folder, via the `repo-maintenance` skill |
+| Reads | [`AGENTS.md`](../AGENTS.md), [`CONTEXT.md`](../CONTEXT.md), the nine task skills | this folder, via the `repo-maintenance` skill |
 | Loaded | every session | on demand, when the Manager asks for a change |
 
 The routing between them is one line in `AGENTS.md`: a request to change the
@@ -27,7 +27,7 @@ use the tool.
 | [architecture.md](./architecture.md) | What exists, how the pieces connect, what was rejected |
 | [invariants.md](./invariants.md) | What must not be broken, and why |
 | [providers.md](./providers.md) | Per-Provider facts: access, identifiers, memory, limits |
-| [environments.md](./environments.md) | The eight Environments, what each one reads |
+| [environments.md](./environments.md) | The six Environments, what each one reads |
 | [changing-this-repo.md](./changing-this-repo.md) | How to make a change, and where a new fact belongs |
 | [manager-guide.md](./manager-guide.md) | Russian, for humans. Connection, tasks, troubleshooting |
 

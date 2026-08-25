@@ -16,12 +16,18 @@ A change that spans both has a fixed rollout order — see
 
 ## What the agent connects to
 
-Two MCP endpoints, three Providers:
+Three MCP endpoints, four Providers:
 
 | Endpoint | Providers | Hosted by |
 |---|---|---|
 | `https://google-ads-mcp.qmedia.by/mcp` | Google Ads | the agency |
 | `https://lidfly.ru/mcp/v3` | Yandex Direct, VK | LidFly |
+| `https://mcp.facebook.com/ads` | Meta | Meta |
+
+Meta is its own endpoint because there was no other option worth taking: LidFly
+does not carry it, and the alternatives are the two this page already rejects.
+It also validates the shape — the third vendor cost six config files and a
+skill, and nothing in the middle had to be built or released.
 
 Connections are direct, one per vendor. **There is no gateway of ours in
 front of them** — building one would mean rebuilding LidFly: normalising
@@ -68,11 +74,17 @@ agency. The server reads it through a service account and serves it as
 anything, and its id appears only in the server's `.env` — never in either
 repository.
 
-It is also the server's allowlist: an Account absent from the sheet is refused.
-That makes connecting a Client **one operation** — a row — instead of a row plus
-a hand-copied `.env` variable that drifts from it. The behaviour of the sheet
-under failure, and the exact columns parsed, are documented in the fork's
-`FORK.md`; the rules the agent must follow are in
+It is also the server's allowlist **for Google Ads**: an Account absent from the
+sheet is refused. That makes connecting a Client **one operation** — a row —
+instead of a row plus a hand-copied `.env` variable that drifts from it.
+
+For every other Provider the same sheet is navigation and nothing more, because
+their cabinets are on servers that are not ours and enforce nothing of ours.
+The distinction is load-bearing and is set out in
+[invariants.md](./invariants.md#the-registry-is-a-boundary-for-google-ads-and-navigation-for-everyone-else).
+
+The behaviour of the sheet under failure, and the exact columns parsed, are
+documented in the fork's `FORK.md`; the rules the agent must follow are in
 [invariants.md](./invariants.md#what-the-registry-covers-and-what-its-silence-means).
 
 ## The skills pipeline
@@ -85,7 +97,7 @@ skills-source/<skill>/SKILL.md      edited by hand — the only source
         └──> .gemini/skills/        Gemini CLI
 ```
 
-Three target directories for five-plus Environments, because a directory is
+Three target directories for five Environments, because a directory is
 created only where an Environment reads no one else's — see
 [environments.md](./environments.md). The generator is non-destructive: it
 refuses to overwrite a copy that diverges from source and is absent from the
@@ -94,7 +106,7 @@ silently would be worse than failing.
 
 MCP configuration is the opposite case — every Environment needs its own file,
 because the schemas differ (`mcpServers` vs `servers`, `url` vs `serverUrl` vs
-`httpUrl`). The addresses must match across all eight, and
+`httpUrl`). The addresses must match across all six, and
 `scripts/check-mcp-configs.mjs` enforces that.
 
 ## Alternatives rejected
@@ -126,3 +138,12 @@ One line each. Enough to stop them being proposed again.
   figures; Managers used to Wordstat spot it immediately.
 - **Unified write guardrails across all Providers** — needs a shared vocabulary
   over incompatible APIs, i.e. the gateway again.
+- **Reaching Meta through LidFly** — it does not carry Meta and there is no sign
+  it will; its catalogue is Yandex Direct, VK, Metrika, Avito and Wordstat.
+- **A Meta application of our own** — an agency app needs Advanced Access to
+  `ads_mcp_management` and App Review for it. The AI-connectors route needs
+  neither, and each Manager signs in as themselves, which is what every other
+  Provider here already does.
+- **A percentage cap on Meta budget edits** — a number that goes stale, and one
+  that invites splitting an edit in two rather than reconsidering it. The
+  protection is that the Manager was shown the old and new value.

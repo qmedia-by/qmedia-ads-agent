@@ -7,17 +7,19 @@ description: "Находить Аккаунт Яндекс Директа или
 
 Use before any LidFly task — Yandex Direct or VK — where the account, client, connection or campaign is not already exact.
 
-Google Ads does not go through LidFly. Its Accounts come from the Registry, via `registry_find_client`; see the `google-ads-context` skill.
+Google Ads and Meta do not go through LidFly, which carries neither. Google Ads Accounts come from the Registry via `registry_find_client` — see `google-ads-context`. Meta has a server of its own and a skill of its own, `meta-ads-context`; nothing on this page applies to it.
+
+"Top-level tools" below means LidFly's own scope-resolving tools, and nothing to do with the Provider called Meta.
 
 **Call `registry_find_client` first for a Direct question, then come back here.** It often has the Client's Direct login, and it is the only thing that maps a project domain to one: `query` searches LidFly's own directory of connections, so "example-shop.by" finds nothing there. That gap is what this instruction exists for.
 
-The Registry is never a substitute for the scope resolution below — a login from it is a candidate that LidFly validates, not a resolved scope. Resolve Direct and VK scope here, through LidFly's own meta-tools, however you came by the login.
+The Registry is never a substitute for the scope resolution below — a login from it is a candidate that LidFly validates, not a resolved scope. Resolve Direct and VK scope here, through LidFly's own top-level tools, however you came by the login.
 
 Read the Registry's `yandex_direct` field, which has three states and no two of them mean the same thing. A **login** goes into `client_login`. A note that the cell **could not be read** means unknown, not absent — the Account almost certainly exists and the sheet needs tidying, so resolve by `query` and tell the Manager which row to fix. **Nothing at all** is not evidence either: neither `found: false` nor a Client returned without a Direct entry means the Client has no Direct Account. Never tell the Manager a Direct Account is missing until `get_provider_context` has said so.
 
 ## Required Sequence
 
-1. Resolve provider scope with the top-level meta-tools:
+1. Resolve provider scope with the top-level tools:
    - account/client/project unknown: `get_provider_context({ provider, query? })`;
    - Direct login known — from the Manager or from `registry_find_client`: `get_provider_context({ provider: "yandex", query?, client_login })`;
    - campaign named by user: `resolve_campaign_scope({ provider, query, workspace_project_id? })`.
@@ -26,7 +28,7 @@ Read the Registry's `yandex_direct` field, which has three states and no two of 
 4. Copy only returned `tool_args`, `scope_arguments`, or `next_call.arguments` into the internal provider call.
 5. Read with `call_tool`; write with `call_write_tool`.
 
-Call `search_tools`, `get_tool_schema`, `get_provider_context`, and `resolve_campaign_scope` directly. Never pass these top-level meta-tools as `tool_name` to `call_tool` or `call_write_tool`.
+Call `search_tools`, `get_tool_schema`, `get_provider_context`, and `resolve_campaign_scope` directly. Never pass these top-level tools as `tool_name` to `call_tool` or `call_write_tool`.
 
 ## Scope Rules
 
