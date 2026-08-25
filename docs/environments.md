@@ -18,6 +18,31 @@ A config per Environment costs ten lines and no maintenance; the schemas differ
 but the addresses are one set, and `scripts/check-mcp-configs.mjs` keeps all
 six pointing at the same three URLs with no static keys in place of OAuth.
 
+## One Environment is offered to Managers
+
+Since 2026-08-25 a Manager is told to install VS Code with the Codex extension
+and nothing else. The six configs above stay. They cost ten lines each, the
+development agent runs in Claude Code, and none of them is on a Manager's path
+any more.
+
+The reason is the shape of the old guide, not a fault in any Environment. It
+asked someone who does not know what a terminal is to pick an Environment,
+install it, and then find where that particular one hides MCP login — six
+branches, each with its own way to fail, and every branch a support call. One
+path can be written as nine numbered steps with screenshots; six cannot.
+
+Codex is the one because it loses nothing. Checked on Codex CLI 0.147: a
+project-level `.codex/config.toml` supplies all three MCP servers without
+touching any file in the home directory, `.agents/skills` loads all ten skills,
+and `AGENTS.md` is read. It also has the only mechanism here for keeping a
+checkout current without a terminal — a `SessionStart` hook, which is why
+`.codex/hooks.json` exists and no equivalent does for the other five.
+
+The sign that this was wrong would be Managers asking for a different
+Environment for a reason other than habit. The fix would be adding it back to
+their documents; nothing would need adding to the repository, because nothing
+was removed from it.
+
 ## Three skill directories, not five
 
 A directory is created only where an Environment reads no one else's:
@@ -58,9 +83,10 @@ rules a client does not read. Widening the hole counted as that sign, and the
 fix was taken. It cost nothing: nobody had deployed either one, so there was no
 migration to arrange and nothing to announce.
 
-VS Code stays. It has the same gap and it is not the same trade — Managers do
-work there, and the open question below is whether the gap is even real on a
-current version.
+VS Code stays, and the row above is about Copilot inside it — not about the
+Codex extension, which is what Managers actually install and which reads skills
+and `AGENTS.md` in full. Whether the Copilot gap is even real on a current
+version is the open question below.
 
 ## Open question: VS Code is under-served
 
@@ -69,12 +95,12 @@ The table above reflects what VS Code does today: it reads skills from
 when `chat.useAgentsMdFile` is on. Two of those three directories this repo
 already generates, so Copilot gets invariants and skills for free.
 
-The repo has not caught up with that. The Manager's guide still lists VS Code
-under limited support and tells those Managers not to write to cabinets, and
-until someone confirms on a live version whether `chat.useAgentsMdFile` is on by
-default, that warning stays. Moving VS Code to full support is a real decision,
-not a documentation fix: it changes a promise made to Managers about writing to
-their cabinets.
+This no longer reaches a Manager either way: the guide names no Environments,
+and the one they install is Codex. The question is now only about the table
+above, and it stays open until someone confirms on a live version whether
+`chat.useAgentsMdFile` is on by default. Note that Copilot in VS Code is a
+different thing from the Codex extension running inside VS Code — the row above
+is about the former.
 
 ## Weak Models drop instructions, and that is a design input
 

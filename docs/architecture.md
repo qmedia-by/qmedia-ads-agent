@@ -104,6 +104,23 @@ refuses to overwrite a copy that diverges from source and is absent from the
 previous run's manifest, since that file was edited by hand and losing the edit
 silently would be worse than failing.
 
+### And how it reaches a Manager
+
+The pipeline above ends in this repository. A Manager's copy is a clone, so a
+merge into `dev` is not delivery — a `git pull` on their machine is. They do not
+run one: `.codex/hooks.json` registers a `SessionStart` hook that fast-forwards
+the checkout at the start of every chat and tells the agent to ask for a new
+one, because instructions and skills are read once, when a chat begins.
+
+Two properties of that hook decide its shape. Codex will not run a project hook
+until the human presses **Trust** in settings — so the skill `tool-update` does
+the same job on the phrase «обнови инструмент», and a Manager who skipped the
+trust step is not stranded. And that trust is bound to the contents of
+`hooks.json`: editing it sends the hook back for re-approval, and until someone
+notices, updates stop arriving silently. Hence one immutable line in the JSON
+calling `.codex/update-check.sh`, with the logic in the script, where it can
+change freely.
+
 MCP configuration is the opposite case — every Environment needs its own file,
 because the schemas differ (`mcpServers` vs `servers`, `url` vs `serverUrl` vs
 `httpUrl`). The addresses must match across all six, and

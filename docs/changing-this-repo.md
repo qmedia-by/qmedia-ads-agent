@@ -16,6 +16,7 @@ most common way a change looks done and is not.
 | **A skill** | it applies to one Provider or one kind of task | loads only when the skill does |
 | **`docs/`** | it is for the agent changing the tool | never loaded by a campaign session |
 | **`manager-guide.md`** | a human needs to act on it | Russian, and nothing sensitive |
+| **`manager-setup.md`** | it changes how a machine is set up | Russian, screenshots, no Environment choices |
 
 **The first row is the rule that matters most, and it was learned the hard
 way.** `registry_find_client` knew Yandex Direct lives in LidFly and said so in
@@ -113,8 +114,8 @@ differently, and whichever file in `docs/` owns the fact. The rules for these
 documents — one home per fact, reasons beside rules, edit in place — are in
 [README.md](./README.md#how-these-documents-are-kept).
 
-`manager-guide.md` keeps its path and name; see
-[invariants.md](./invariants.md#docsmanager-guidemd-keeps-its-path-and-its-name).
+Both Manager documents keep their paths and names; see
+[invariants.md](./invariants.md#the-two-manager-documents-keep-their-paths).
 
 ## Changes that span both repositories
 

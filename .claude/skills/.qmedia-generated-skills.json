@@ -67,11 +67,19 @@
     },
     {
       "path": "repo-maintenance/SKILL.md",
-      "sha256": "0280586ef976d58fde8f11f8ff006b8e70f1d381e54de1140a0bdc30ee270797"
+      "sha256": "824578bf9661ab8a7fb380a3b430e85dfda59b2a7ab5d4383becbda3e28c794b"
     },
     {
       "path": "repo-maintenance/agents/openai.yaml",
       "sha256": "ece594d096ad3b78050bd22fb21dca1960ed359927bfefaa296be20df624d212"
+    },
+    {
+      "path": "tool-update/SKILL.md",
+      "sha256": "9dbf846763d02a03a962c8d79722b6a17cc75caf79b58592f2a7dd05cf53c320"
+    },
+    {
+      "path": "tool-update/agents/openai.yaml",
+      "sha256": "4b0731dc762f084129bf7b2ec68ff3958a7b756c31424115506c2e47a834e049"
     },
     {
       "path": "vk-ads-campaign-builder/SKILL.md",

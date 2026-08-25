@@ -47,8 +47,11 @@ not restate it in this repository.
 - **Nothing private, ever.** Both repositories are public: no tokens, no Client
   names, no account ids, no address of a private resource — including in
   `docs/manager-guide.md`.
-- **Update the Manager's guide in the same change** when a Manager has to act
-  differently. Keep its path and file name; department documents link to it.
+- **Update the Manager's documents in the same change** when a Manager has to
+  act differently: `docs/manager-setup.md` if the setup changes,
+  `docs/manager-guide.md` if the day-to-day does. Both keep their paths and file
+  names — department documents link to the guide, and the setup page is the
+  public link handed to a new Manager.
 
 ## Changes that reach the server
 

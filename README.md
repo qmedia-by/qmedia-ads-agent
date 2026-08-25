@@ -30,7 +30,7 @@ TikTok — после MVP. Официальный MCP-сервер у него �
 | OpenClaw | `.openclaw/openclaw.example.json` | `.agents/skills` | `AGENTS.md` |
 | VS Code | `.vscode/mcp.json` | — | зависит от расширения |
 
-Нижняя строка — **ограниченная поддержка**: формат SKILL.md VS Code не читает. Windsurf и Cline поддерживались раньше и сняты: они получали инструменты записи всех Провайдеров без единого правила обращения с ними, а с приходом Meta, где правка бюджета применяется сразу, риск перестал быть приемлемым — [почему именно так](docs/environments.md#windsurf-and-cline-were-dropped). Подробности и порядок подключения каждой — в [инструкции для Менеджера](docs/manager-guide.md#что-установить), причины именно такого деления — в [docs/environments.md](docs/environments.md).
+Нижняя строка — **ограниченная поддержка**: формат SKILL.md VS Code не читает. Windsurf и Cline поддерживались раньше и сняты: они получали инструменты записи всех Провайдеров без единого правила обращения с ними, а с приходом Meta, где правка бюджета применяется сразу, риск перестал быть приемлемым — [почему именно так](docs/environments.md#windsurf-and-cline-were-dropped). Подробности и порядок подключения каждой — в [docs/environments.md](docs/environments.md), причины именно такого деления — в [docs/environments.md](docs/environments.md).
 
 Строка VS Code, скорее всего, устарела: сегодняшний VS Code читает скиллы из `.agents/skills` и `.claude/skills`, а `AGENTS.md` — при включённом `chat.useAgentsMdFile`. Пока это не проверено на живой версии, обещание Менеджерам мы не меняем — [почему](docs/environments.md#open-question-vs-code-is-under-served).
 
@@ -38,11 +38,13 @@ DeepSeek, GPT, Gemini и Claude — это Модели, а не Среды. М�
 
 ## Быстрый старт для Менеджера
 
-Подробный разбор с типовыми задачами — в [инструкции для Менеджера](docs/manager-guide.md). Ниже — только то, без чего не начать.
+Менеджерам предъявляется **одна** Среда — VS Code с расширением Codex. Шесть конфигов ниже существуют для разработки; выбирать из них Менеджер не должен и не выбирает ([почему](docs/environments.md#one-environment-is-offered-to-managers)).
 
-1. Клонируйте репозиторий и откройте его как проект в своей Среде. Полная поддержка — Claude Code, Codex, Cursor, Gemini CLI, OpenClaw; VS Code получает только MCP, без скиллов (см. [Среды](#среды)).
+Пошаговая настройка — в [инструкции по настройке](docs/manager-setup.md), задачи и разбор ошибок — в [инструкции для Менеджера](docs/manager-guide.md). Ниже — только то, без чего не начать.
+
+1. Установите VS Code, Git и расширение ChatGPT – Codex, склонируйте репозиторий и откройте папку как проект.
 2. Убедитесь, что ваш рабочий Google-аккаунт внесён в Test users — без этого OAuth Google Ads не пройдёт. Если не уверены, спросите у того, кто администрирует MCP-сервер.
-3. Пройдите OAuth для всех трёх серверов: `google-ads`, `lidfly` и `meta`. Где это делается для каждой Среды — [в инструкции для Менеджера](docs/manager-guide.md#авторизация-mcp).
+3. Пройдите OAuth для всех трёх серверов: `google-ads`, `lidfly` и `meta` — в Codex это экран **Configure MCP servers**.
 4. Проверьте, что всё живо:
 
 ```text
@@ -111,7 +113,8 @@ MCP-сервер Google Ads — форк [googleads/google-ads-mcp](https://gith
 
 ## Документация
 
-- [docs/manager-guide.md](docs/manager-guide.md) — инструкция для Менеджера: подключение, типовые задачи, разбор ошибок
+- [docs/manager-setup.md](docs/manager-setup.md) — настройка с нуля, для человека: что установить и в каком порядке
+- [docs/manager-guide.md](docs/manager-guide.md) — инструкция для Менеджера: типовые задачи, разбор ошибок
 - [CONTEXT.md](CONTEXT.md) — термины проекта
 - [AGENTS.md](AGENTS.md) — инварианты для агента
 - [docs/](docs/README.md) — документация для агента, который правит инструмент: устройство, инварианты, Провайдеры, Среды, порядок правки

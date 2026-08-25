@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .codex/update-check.sh",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File .codex\\update-check.ps1",
+            "timeout": 20,
+            "statusMessage": "Проверяю обновления инструмента"
+          }
+        ]
+      }
+    ]
+  }
+}

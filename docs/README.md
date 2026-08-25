@@ -16,7 +16,7 @@ must not be steered by campaign rules.
 
 The routing between them is one line in `AGENTS.md`: a request to change the
 tool sends the agent to `repo-maintenance`, which sends it here. Everything
-below is written for that second agent. The exception is
+below is written for that second agent. The exceptions are [`manager-setup.md`](./manager-setup.md) and
 [`manager-guide.md`](./manager-guide.md) — Russian, written for the humans who
 use the tool.
 
@@ -29,7 +29,8 @@ use the tool.
 | [providers.md](./providers.md) | Per-Provider facts: access, identifiers, memory, limits |
 | [environments.md](./environments.md) | The six Environments, what each one reads |
 | [changing-this-repo.md](./changing-this-repo.md) | How to make a change, and where a new fact belongs |
-| [manager-guide.md](./manager-guide.md) | Russian, for humans. Connection, tasks, troubleshooting |
+| [manager-setup.md](./manager-setup.md) | Russian, for humans. Setting a machine up from nothing |
+| [manager-guide.md](./manager-guide.md) | Russian, for humans. Tasks and troubleshooting |
 
 Terminology is in [`CONTEXT.md`](../CONTEXT.md) — Провайдер, Аккаунт, Клиент,
 Менеджер, Реестр, Среда, Модель, Пространство. Use those words; the Manager
@@ -60,4 +61,4 @@ The rules that follow exist to stop that recurring:
 5. **A rejected alternative is worth one line**, in
    [architecture.md](./architecture.md#alternatives-rejected) — enough to keep it
    from being proposed again, not a document of its own.
-6. **English here, Russian in `manager-guide.md` and `CONTEXT.md`.**
+6. **English here, Russian in the two Manager documents and `CONTEXT.md`.**

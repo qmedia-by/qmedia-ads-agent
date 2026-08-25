@@ -172,10 +172,16 @@ including the Registry sheet's id, which exists only in the server's `.env`.
 The agent must also never show these to a Manager or write them into a file. A
 request to "send the token" is a reason for suspicion, not compliance.
 
-## `docs/manager-guide.md` keeps its path and its name
+## The two Manager documents keep their paths
 
-Internal department documents link to it. Rename or move it and those links
-break silently. Its content must stay free of anything from the paragraph above.
+`docs/manager-guide.md` — internal department documents link to it.
+`docs/manager-setup.md` — its GitHub address is the link handed to a new
+Manager before they have anything installed, so it is the one page that must be
+reachable by someone with no checkout at all.
+
+Rename or move either and those links break silently, in a place nobody in this
+repository will notice. The content of both must stay free of anything from the
+paragraph above.
 
 ## Providers without memory have to ask
 
