@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "connection-doctor/SKILL.md",
-      "sha256": "a740728139c2fb654d017b875e230f2777fb974bcafc27acdbd0584592595e80"
+      "sha256": "61df30591655a5a8e20de057afac2fdb434cb72a05d9dbbe71e25c09dbcb59a1"
     },
     {
       "path": "connection-doctor/agents/openai.yaml",
@@ -11,7 +11,7 @@
     },
     {
       "path": "google-ads-context/SKILL.md",
-      "sha256": "62b5c7942f74b6d7c4be88e04774cc8c0b6ff8895ed1411192df10275cc441e0"
+      "sha256": "bfb5dff721861cbb8bc9892c52c4dae78e1f41eb51ebab03b03a6388f5342f9f"
     },
     {
       "path": "google-ads-context/agents/openai.yaml",
@@ -51,19 +51,35 @@
     },
     {
       "path": "mcp-v3-provider-context/SKILL.md",
-      "sha256": "0313fde113d3c45e80ba5c5a4fdf319ef417a41bae7875428b02d12436acff8e"
+      "sha256": "53fdbc4d8cd5d12b6d2d8d271aca84cbd53d55ada1cc610583a5252d1e237c80"
     },
     {
       "path": "mcp-v3-provider-context/agents/openai.yaml",
       "sha256": "214802c4115e080b0e8ee4092f92eeac0a7c7d5ec8fd2fd73812ba9b277366c4"
     },
     {
+      "path": "meta-ads-context/SKILL.md",
+      "sha256": "60b2c887f23478cae86230cf7ea3ddfc595a7fefed1a5628386c50757857a630"
+    },
+    {
+      "path": "meta-ads-context/agents/openai.yaml",
+      "sha256": "14c5c4657bd24e1a95c328324ee9ad14c1f514be03c27b77ca4e64d0d39fb5a0"
+    },
+    {
       "path": "repo-maintenance/SKILL.md",
-      "sha256": "0280586ef976d58fde8f11f8ff006b8e70f1d381e54de1140a0bdc30ee270797"
+      "sha256": "824578bf9661ab8a7fb380a3b430e85dfda59b2a7ab5d4383becbda3e28c794b"
     },
     {
       "path": "repo-maintenance/agents/openai.yaml",
       "sha256": "ece594d096ad3b78050bd22fb21dca1960ed359927bfefaa296be20df624d212"
+    },
+    {
+      "path": "tool-update/SKILL.md",
+      "sha256": "9dbf846763d02a03a962c8d79722b6a17cc75caf79b58592f2a7dd05cf53c320"
+    },
+    {
+      "path": "tool-update/agents/openai.yaml",
+      "sha256": "4b0731dc762f084129bf7b2ec68ff3958a7b756c31424115506c2e47a834e049"
     },
     {
       "path": "vk-ads-campaign-builder/SKILL.md",
@@ -75,7 +91,7 @@
     },
     {
       "path": "workspace-project-manager/SKILL.md",
-      "sha256": "849a1e7e6496281cbbb37055877e63e1e8e3cbd99cea8563170e3010ef35c486"
+      "sha256": "d5dbced88065868866010f73201db81f9265df34f151d2350b0b193f589dcf59"
     },
     {
       "path": "workspace-project-manager/agents/openai.yaml",

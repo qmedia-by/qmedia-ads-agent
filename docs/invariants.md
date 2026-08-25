@@ -22,6 +22,24 @@ confirmation, then `call_write_tool`. The asymmetry looks like an oversight and
 is not — Managers already work this way in LidFly every day, and forbidding it
 for the sake of symmetry would make this tool poorer than the one it replaces.
 
+**Meta sits between the two, and the line runs through creation.** Budgets,
+statuses, bids and targeting on entities that already exist may be changed,
+under the same read → plan → confirm → write order. Campaigns, ad sets and ads
+may not be created. That line is not where the server's capabilities end —
+`ads_create_campaign` and its neighbours are there and would work — so it holds
+only as long as the sentence carrying it stays in `AGENTS.md` and in
+`meta-ads-context`, which is why `test-skill-rules.mjs` guards both. Creation
+pulls in creatives, Pages, Instagram accounts and catalogues; it is a separate
+decision, and nobody has made it.
+
+One thing about Meta writes has no counterpart elsewhere: **a budget edit
+applies to a live account immediately**. Creation lands paused and needs a
+separate activation, and LidFly writes are reviewed in a plan the Manager reads
+in a familiar tool. A budget change has neither, so the plan must name the old
+value, the new value and the account currency every time. There is deliberately
+no percentage above which a change is refused: a threshold goes stale, and it
+invites splitting one edit into two rather than reconsidering it.
+
 When Google Ads eventually needs write access, it cannot simply be switched on:
 it needs an extension to the fork and a separate decision about guardrails.
 
@@ -39,8 +57,8 @@ is not one — it lives outside the repository entirely.
 
 ## What the Registry covers, and what its silence means
 
-Google Ads, VK, and a Yandex Direct **login** wherever the sheet records one
-cleanly. Meta and TikTok are outside it entirely.
+Google Ads, VK, Meta, and a Yandex Direct **login** wherever the sheet records
+one cleanly. TikTok is outside it entirely.
 
 Direct used to be outside it too, and the reasoning was sound as far as it went:
 in the sheet's Direct column some projects keep the cabinet login **together
@@ -89,6 +107,30 @@ Inside the perimeter the Registry guards nothing: a Manager who dictates another
 Client's `customer_id` gets through, and the whole Client list is visible to
 anyone who passed OAuth. Starting from the Registry is discipline, not control.
 
+## The Registry is a boundary for Google Ads and navigation for everyone else
+
+One sheet, two jobs, and reading the second as the first is how an agent
+refuses work it should have done.
+
+For Google Ads the Registry **is** the allowlist. The server holds the agency's
+developer token, the endpoint is public, and a mistyped `customer_id` would
+otherwise reach another agency's numbers — so an Account absent from the sheet
+is refused, and refusing is correct.
+
+Every other Provider is on somebody else's server. LidFly decides what a
+`client_login` reaches; Meta decides which cabinets a Manager's Business
+Manager can see. Nothing written or not written in our spreadsheet changes
+either. There the Registry does one job only: it turns a Client's name into an
+identifier faster than asking would. When it cannot, the answer is to ask the
+Provider — never to conclude the Account does not exist, and never to decline.
+
+The failure this prevents is specific and was worth writing down: an agent that
+has learned "not in the Registry means refused" from Google Ads carries it to
+Meta, tells the Manager their Client has no cabinet — which this sheet is in no
+position to know — and stops. That is why `registry_find_client` says it in the
+payload rather than only here, and why `AGENTS.md` repeats it: see
+[changing-this-repo.md](./changing-this-repo.md#where-a-new-fact-belongs).
+
 ## A Client may have several Accounts with one Provider
 
 The agency splits Clients across cabinets by country and product line. The tool
@@ -130,19 +172,30 @@ including the Registry sheet's id, which exists only in the server's `.env`.
 The agent must also never show these to a Manager or write them into a file. A
 request to "send the token" is a reason for suspicion, not compliance.
 
-## `docs/manager-guide.md` keeps its path and its name
+## The two Manager documents keep their paths
 
-Internal department documents link to it. Rename or move it and those links
-break silently. Its content must stay free of anything from the paragraph above.
+`docs/manager-guide.md` — internal department documents link to it.
+`docs/manager-setup.md` — its GitHub address is the link handed to a new
+Manager before they have anything installed, so it is the one page that must be
+reachable by someone with no checkout at all.
 
-## Google Ads has no project memory, so it must ask
+Rename or move either and those links break silently, in a place nobody in this
+repository will notice. The content of both must stay free of anything from the
+paragraph above.
+
+## Providers without memory have to ask
 
 LidFly keeps memory — Пространства hold decisions and campaign snapshots for
-Yandex Direct and VK, and Managers use it daily. Google Ads has nothing
-equivalent and nothing to build it from, so a Client's context saved in a
-Пространство is **not** available when working on their Google Ads Account.
+Yandex Direct and VK, and Managers use it daily. Google Ads and Meta have
+nothing equivalent and nothing to build it from, so a Client's context saved in
+a Пространство is **not** available when working on their Accounts there.
 
-Therefore, for Google Ads the agent starts from nothing every time: geo,
-language, and currency cannot be inferred and must come from the Manager. Skills
-must demand them rather than guess. A wrong region quietly ruins the entire
-result, which is why this sits here and not in a skill.
+Therefore, for Google Ads and Meta the agent starts from nothing every time:
+geo, language, currency and KPI cannot be inferred and must come from the
+Manager. Skills must demand them rather than guess. A wrong region quietly
+ruins the entire result, which is why this sits here and not in a skill.
+
+Meta adds two of its own that behave the same way, because they belong to the
+ad account rather than to the Manager: its **time zone** and its **attribution
+window**. A figure reported without them looks comparable to a Google Ads
+figure and is not.

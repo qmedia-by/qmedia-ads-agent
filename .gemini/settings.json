@@ -5,6 +5,9 @@
     },
     "lidfly": {
       "httpUrl": "https://lidfly.ru/mcp/v3"
+    },
+    "meta": {
+      "httpUrl": "https://mcp.facebook.com/ads"
     }
   },
   "context": {

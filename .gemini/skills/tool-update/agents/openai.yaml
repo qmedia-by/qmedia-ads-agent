@@ -1,0 +1,7 @@
+interface:
+  display_name: "Обновление инструмента"
+  short_description: "Подтянуть свежую версию из репозитория"
+  default_prompt: "Используй $tool-update, чтобы обновить инструмент до свежей версии."
+
+dependencies:
+  tools: []
