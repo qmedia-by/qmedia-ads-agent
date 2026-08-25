@@ -1,6 +1,6 @@
 ---
 name: connection-doctor
-description: "Диагностировать сбой подключения к Google Ads, LidFly или Meta: протухший OAuth, неверный config клиента, timeout транспорта, отсутствующее подключение Провайдера, недоступный инструмент. Использовать при ошибках авторизации, Failed, Authenticate/Login и когда инструмент не отвечает."
+description: "Подключить рекламные кабинеты в первый раз и чинить сбои подключения к Google Ads, LidFly или Meta: вход в MCP, протухший OAuth, неверный config клиента, timeout транспорта, недоступный инструмент. Использовать на фразы «подключи кабинеты», «войди в MCP», при ошибках авторизации, Failed, Authenticate/Login и когда инструмент не отвечает."
 ---
 
 # Connection Doctor
@@ -20,6 +20,45 @@ One action:
 > Re-authorise the `google-ads` server in your client and repeat the request.
 
 Stop there. Do not propose config edits, do not blame the network, and do not suggest the Account lost permissions. If re-authorisation itself fails, only then continue below.
+
+## Signing in to the MCP servers, in Codex
+
+A Manager on the supported path — VS Code with the Codex extension — cannot do
+this themselves: the extension's MCP settings screen shows server status and
+offers no way to start the OAuth flow. Checked on extension 26.818, and it is
+why the Manager's setup page tells them to ask you instead. So sign them in.
+
+`codex mcp login <name>` is the command, one server at a time, for `google-ads`,
+`lidfly` and `meta`. Two things it needs:
+
+**Find the binary.** `codex` is not on the PATH of the shell you are given
+unless the Manager installed the CLI separately, which the setup page does not
+ask them to do. Try in this order and stop at the first hit:
+
+```bash
+command -v codex
+readlink -f "$(command -v apply_patch)"          # Codex puts this on PATH; it points at its own binary
+ls ~/.vscode/extensions/openai.chatgpt-*/bin/*/codex
+ls /Applications/ChatGPT.app/Contents/Resources/codex
+```
+
+**Escalate.** The shell runs with `CODEX_SANDBOX_NETWORK_DISABLED=1`, and the
+command both talks to the network and opens a browser. Request escalated
+permissions with a one-line justification instead of reporting a sandbox error
+as a failure.
+
+The command waits for the Manager to finish in the browser, so it can outrun the
+tool timeout. **A timeout here is not a failure and must not be retried** — the
+browser flow may well have completed. Check the real state instead:
+
+```bash
+codex mcp list
+```
+
+The `Auth` column reads `OAuth` for a server that is signed in. Report per
+server, name the ones that are still out, and offer to repeat only those. Tell
+the Manager that Google will warn about an unverified app on the `google-ads`
+flow — that is our own server, and **Advanced** → continue is correct.
 
 ## Identify the client first
 

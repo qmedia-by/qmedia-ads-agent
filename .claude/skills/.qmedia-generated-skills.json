@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "connection-doctor/SKILL.md",
-      "sha256": "61df30591655a5a8e20de057afac2fdb434cb72a05d9dbbe71e25c09dbcb59a1"
+      "sha256": "9c40a9a7bffc8959f7599545b102cd7fd260811f3853749f5dea64a8605c5aff"
     },
     {
       "path": "connection-doctor/agents/openai.yaml",
